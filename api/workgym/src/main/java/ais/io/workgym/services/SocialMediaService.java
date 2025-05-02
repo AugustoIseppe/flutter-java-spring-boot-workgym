@@ -3,10 +3,13 @@ package ais.io.workgym.services;
 import ais.io.workgym.dto.SocialMediaDTO;
 import ais.io.workgym.entities.SocialMedia;
 import ais.io.workgym.repositories.SocialMediaRepository;
+import ais.io.workgym.services.exceptions.DatabaseException;
 import ais.io.workgym.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -48,6 +51,19 @@ public class SocialMediaService {
     public SocialMediaDTO findById(UUID id) {
         SocialMedia socialMedia = socialMediaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Rede Social não encontrada"));
         return new SocialMediaDTO(socialMedia);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(UUID id) {
+        if (!socialMediaRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Rede Social não encontrada");
+        }
+
+        try {
+            socialMediaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Falha de integridade referencial");
+        }
     }
 
     private void copyDtoToEntity(SocialMediaDTO socialMediaDTO, SocialMedia socialMediaEntity) {

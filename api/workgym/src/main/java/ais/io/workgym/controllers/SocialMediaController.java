@@ -43,4 +43,10 @@ public class SocialMediaController {
         SocialMediaDTO socialMediaDTO = socialMediaService.findById(id);
         return ResponseEntity.ok(socialMediaDTO);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        socialMediaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
