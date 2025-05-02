@@ -13,5 +13,4 @@ public class SocialMedia {
     private UUID uuid;
     private String name;
     private String link;
-
 }
