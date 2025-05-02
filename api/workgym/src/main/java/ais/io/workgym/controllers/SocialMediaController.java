@@ -37,4 +37,10 @@ public class SocialMediaController {
         List<SocialMediaDTO> result = socialMediaService.findAll();
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<SocialMediaDTO> findById(@PathVariable UUID id) {
+        SocialMediaDTO socialMediaDTO = socialMediaService.findById(id);
+        return ResponseEntity.ok(socialMediaDTO);
+    }
 }

@@ -44,7 +44,11 @@ public class SocialMediaService {
         return result.stream().map(socialMediaEntity -> new SocialMediaDTO(socialMediaEntity)).toList();
     }
 
-
+    @Transactional
+    public SocialMediaDTO findById(UUID id) {
+        SocialMedia socialMedia = socialMediaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Rede Social não encontrada"));
+        return new SocialMediaDTO(socialMedia);
+    }
 
     private void copyDtoToEntity(SocialMediaDTO socialMediaDTO, SocialMedia socialMediaEntity) {
         socialMediaEntity.setName(socialMediaDTO.getName());
