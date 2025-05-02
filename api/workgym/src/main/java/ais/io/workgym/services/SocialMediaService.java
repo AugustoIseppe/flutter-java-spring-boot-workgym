@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,6 +37,14 @@ public class SocialMediaService {
             throw new ResourceNotFoundException("Rede social não encontrada");
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<SocialMediaDTO> findAll() {
+        List<SocialMedia> result = socialMediaRepository.findAll();
+        return result.stream().map(socialMediaEntity -> new SocialMediaDTO(socialMediaEntity)).toList();
+    }
+
+
 
     private void copyDtoToEntity(SocialMediaDTO socialMediaDTO, SocialMedia socialMediaEntity) {
         socialMediaEntity.setName(socialMediaDTO.getName());
