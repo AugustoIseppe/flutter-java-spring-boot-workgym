@@ -3,9 +3,13 @@ package ais.io.workgym.services;
 import ais.io.workgym.dto.SocialMediaDTO;
 import ais.io.workgym.entities.SocialMedia;
 import ais.io.workgym.repositories.SocialMediaRepository;
+import ais.io.workgym.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 public class SocialMediaService {
@@ -19,6 +23,18 @@ public class SocialMediaService {
         copyDtoToEntity(socialMediaDTO, socialMediaEntity);
         socialMediaEntity = socialMediaRepository.save(socialMediaEntity);
         return new SocialMediaDTO(socialMediaEntity);
+    }
+
+    @Transactional
+    public SocialMediaDTO update(UUID id, SocialMediaDTO socialMediaDTO) {
+        try {
+            SocialMedia socialMediaEntity = socialMediaRepository.getReferenceById(id);
+            copyDtoToEntity(socialMediaDTO, socialMediaEntity);
+            socialMediaEntity = socialMediaRepository.save(socialMediaEntity);
+            return new SocialMediaDTO(socialMediaEntity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Rede social não encontrada");
+        }
     }
 
     private void copyDtoToEntity(SocialMediaDTO socialMediaDTO, SocialMedia socialMediaEntity) {
