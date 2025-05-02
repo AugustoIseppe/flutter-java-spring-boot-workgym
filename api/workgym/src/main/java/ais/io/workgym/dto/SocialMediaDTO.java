@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class SocialMediaDTO {
 
-    private UUID uuid;
+    private UUID id;
 
     @NotBlank
     @Size(min = 3, max = 80, message = "O nome precisa ter de 3 a 80 caracteres")
@@ -20,20 +20,21 @@ public class SocialMediaDTO {
 
     public SocialMediaDTO() {}
 
-    public SocialMediaDTO(UUID uuid, String name, String link) {
-        this.uuid = uuid;
+    public SocialMediaDTO(UUID id, String name, String link) {
+        this.id = id;
         this.name = name;
         this.link = link;
     }
 
     public SocialMediaDTO(SocialMedia socialMediaEntity) {
-        uuid = socialMediaEntity.getUuid();
+        id = socialMediaEntity.getId();
         name = socialMediaEntity.getName();
         link = socialMediaEntity.getLink();
     }
 
-    public UUID getUuid() {
-        return uuid;
+
+    public UUID getId() {
+        return id;
     }
 
     public String getName() {
