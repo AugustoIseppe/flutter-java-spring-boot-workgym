@@ -1,4 +1,4 @@
-package ais.io.workgym.dto;
+package ais.io.workgym.dto.socialmedia;
 
 import ais.io.workgym.entities.SocialMedia;
 import jakarta.validation.constraints.NotBlank;

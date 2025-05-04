@@ -1,6 +1,6 @@
 package ais.io.workgym.controllers;
 
-import ais.io.workgym.dto.SocialMediaDTO;
+import ais.io.workgym.dto.socialmedia.SocialMediaDTO;
 import ais.io.workgym.services.SocialMediaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package ais.io.workgym.services;
 
-import ais.io.workgym.dto.SocialMediaDTO;
+import ais.io.workgym.dto.socialmedia.SocialMediaDTO;
 import ais.io.workgym.entities.SocialMedia;
 import ais.io.workgym.repositories.SocialMediaRepository;
 import ais.io.workgym.services.exceptions.DatabaseException;
