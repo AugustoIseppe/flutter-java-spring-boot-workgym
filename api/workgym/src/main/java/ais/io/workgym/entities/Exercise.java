@@ -2,7 +2,6 @@ package ais.io.workgym.entities;
 
 import jakarta.persistence.*;
 
-import javax.annotation.processing.Generated;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,16 +16,18 @@ public class Exercise {
     private String description;
     private String muscleGroup;
     private String equipment;
+    private String image;
 
     public Exercise() {
     }
 
-    public Exercise(UUID id, String name, String description, String muscleGroup, String equipment) {
+    public Exercise(UUID id, String name, String description, String muscleGroup, String equipment, String image) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.muscleGroup = muscleGroup;
         this.equipment = equipment;
+        this.image = image;
     }
 
     public UUID getId() {
@@ -69,21 +70,25 @@ public class Exercise {
         this.equipment = equipment;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
         Exercise exercise = (Exercise) o;
-        return Objects.equals(id, exercise.id) && Objects.equals(name, exercise.name) && Objects.equals(description, exercise.description) && Objects.equals(muscleGroup, exercise.muscleGroup) && Objects.equals(equipment, exercise.equipment);
+        return Objects.equals(id, exercise.id);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(id);
-        result = 31 * result + Objects.hashCode(name);
-        result = 31 * result + Objects.hashCode(description);
-        result = 31 * result + Objects.hashCode(muscleGroup);
-        result = 31 * result + Objects.hashCode(equipment);
-        return result;
+        return Objects.hashCode(id);
     }
 }
