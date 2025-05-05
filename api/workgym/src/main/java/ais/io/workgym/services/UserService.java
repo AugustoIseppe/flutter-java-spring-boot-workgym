@@ -2,12 +2,13 @@ package ais.io.workgym.services;
 
 import ais.io.workgym.dto.user.UserRequestDTO;
 import ais.io.workgym.dto.user.UserResponseDTO;
-import ais.io.workgym.entities.Exercise;
 import ais.io.workgym.entities.User;
 import ais.io.workgym.repositories.UserRepository;
+import ais.io.workgym.services.exceptions.DatabaseException;
 import ais.io.workgym.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +53,19 @@ public class UserService {
                 () -> new ResourceNotFoundException("Usuário não encontrado")
         );
         return new UserResponseDTO(userEntity);
+    }
+
+    @Transactional
+    public void delete(UUID id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Usuário não encontrado");
+        }
+
+        try {
+            userRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Erro de integridade referencial");
+        }
     }
 
     private void copyDtoToEntity(UserRequestDTO userRequestDTO, User userEntity) {
