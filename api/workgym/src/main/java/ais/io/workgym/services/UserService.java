@@ -2,6 +2,7 @@ package ais.io.workgym.services;
 
 import ais.io.workgym.dto.user.UserRequestDTO;
 import ais.io.workgym.dto.user.UserResponseDTO;
+import ais.io.workgym.entities.Exercise;
 import ais.io.workgym.entities.User;
 import ais.io.workgym.repositories.UserRepository;
 import ais.io.workgym.services.exceptions.ResourceNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,6 +38,12 @@ public class UserService {
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Usuário não encontrado");
         }
+    }
+
+    @Transactional
+    public List<UserResponseDTO> findAll() {
+        List<User> userEntityList = userRepository.findAll();
+        return userEntityList.stream().map(UserResponseDTO::new).toList();
     }
 
     private void copyDtoToEntity(UserRequestDTO userRequestDTO, User userEntity) {

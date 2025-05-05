@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,4 +33,9 @@ public class UserController {
         return ResponseEntity.ok(userResponseDTO);
     }
 
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> findAll(){
+        List<UserResponseDTO> userResponseDTOList = userService.findAll();
+        return ResponseEntity.ok(userResponseDTOList);
+    }
 }
