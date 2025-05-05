@@ -39,4 +39,16 @@ public class ExerciseController {
         List<ExerciseResponseDTO> exerciseResponseDTOList = exerciseService.findAll();
         return ResponseEntity.ok(exerciseResponseDTOList);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ExerciseResponseDTO> findById(@PathVariable UUID id) {
+        ExerciseResponseDTO exerciseResponseDTO = exerciseService.findById(id);
+        return ResponseEntity.ok(exerciseResponseDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        exerciseService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

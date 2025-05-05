@@ -4,9 +4,11 @@ import ais.io.workgym.dto.exercise.ExerciseRequestDTO;
 import ais.io.workgym.dto.exercise.ExerciseResponseDTO;
 import ais.io.workgym.entities.Exercise;
 import ais.io.workgym.repositories.ExerciseRepository;
+import ais.io.workgym.services.exceptions.DatabaseException;
 import ais.io.workgym.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +30,7 @@ public class ExerciseService {
     }
 
     @Transactional
-    public ExerciseResponseDTO update(UUID id, ExerciseRequestDTO exerciseRequestDTO){
+    public ExerciseResponseDTO update(UUID id, ExerciseRequestDTO exerciseRequestDTO) {
         try {
             Exercise exerciseEntity = exerciseRepository.getReferenceById(id);
             copyDtoToEntity(exerciseRequestDTO, exerciseEntity);
@@ -40,9 +42,30 @@ public class ExerciseService {
     }
 
     @Transactional
-    public List<ExerciseResponseDTO> findAll(){
+    public List<ExerciseResponseDTO> findAll() {
         List<Exercise> exerciseEntity = exerciseRepository.findAll();
         return exerciseEntity.stream().map(ExerciseResponseDTO::new).toList();
+    }
+
+    @Transactional
+    public ExerciseResponseDTO findById(UUID id) {
+        Exercise exerciseEntity = exerciseRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Exercício não encontrado")
+        );
+        return new ExerciseResponseDTO(exerciseEntity);
+    }
+
+    @Transactional
+    public void delete(UUID id) {
+        if (!exerciseRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Exercício não encontrado");
+        }
+
+        try {
+            exerciseRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Erro de integridade referencial");
+        }
     }
 
     private void copyDtoToEntity(ExerciseRequestDTO exerciseRequestDTO, Exercise exerciseEntity) {
