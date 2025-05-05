@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,5 +32,11 @@ public class ExerciseController {
     public ResponseEntity<ExerciseResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody ExerciseRequestDTO exerciseRequestDTO) {
         ExerciseResponseDTO exerciseResponseDTO = exerciseService.update(id, exerciseRequestDTO);
         return ResponseEntity.ok(exerciseResponseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ExerciseResponseDTO>> findAll() {
+        List<ExerciseResponseDTO> exerciseResponseDTOList = exerciseService.findAll();
+        return ResponseEntity.ok(exerciseResponseDTOList);
     }
 }

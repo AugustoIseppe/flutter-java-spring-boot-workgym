@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,6 +37,12 @@ public class ExerciseService {
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Exercício não encontrado");
         }
+    }
+
+    @Transactional
+    public List<ExerciseResponseDTO> findAll(){
+        List<Exercise> exerciseEntity = exerciseRepository.findAll();
+        return exerciseEntity.stream().map(ExerciseResponseDTO::new).toList();
     }
 
     private void copyDtoToEntity(ExerciseRequestDTO exerciseRequestDTO, Exercise exerciseEntity) {
