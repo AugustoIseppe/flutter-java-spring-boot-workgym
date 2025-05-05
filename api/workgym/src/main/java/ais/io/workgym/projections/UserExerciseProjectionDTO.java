@@ -1,5 +1,7 @@
 package ais.io.workgym.projections;
 
+import ais.io.workgym.entities.UserExercise;
+
 public class UserExerciseProjectionDTO {
     private String name;
     private String description;
@@ -15,6 +17,9 @@ public class UserExerciseProjectionDTO {
         this.series = series;
         this.repetitions = repetitions;
         this.observation = observation;
+    }
+
+    public UserExerciseProjectionDTO(UserExercise userExercise) {
     }
 
     // Getters

@@ -44,4 +44,10 @@ public class UserExerciseController {
         List<UserExerciseProjectionDTO> list = userExerciseService.getExercisesByUserAndWeekDay(userId, weekDay);
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping
+    public ResponseEntity<List<UserExerciseProjectionDTO>> getAll() {
+        List<UserExerciseProjectionDTO> list = userExerciseService.findAll();
+        return ResponseEntity.ok(list);
+    }
 }

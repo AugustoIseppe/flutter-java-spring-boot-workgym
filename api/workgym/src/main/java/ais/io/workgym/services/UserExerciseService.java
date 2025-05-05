@@ -10,7 +10,6 @@ import ais.io.workgym.repositories.ExerciseRepository;
 import ais.io.workgym.repositories.UserExerciseRepository;
 import ais.io.workgym.repositories.UserRepository;
 import ais.io.workgym.services.exceptions.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,7 +79,21 @@ public class UserExerciseService {
                         (String) row[5]        // observation ✅
                 ))
                 .toList();
+    }
 
+    @Transactional
+    public List<UserExerciseProjectionDTO> findAll() {
+        List<UserExercise> userExercises = userExerciseRepository.findAll();
+        return userExercises.stream()
+                .map(userExercise -> new UserExerciseProjectionDTO(
+                        userExercise.getExercise().getName(),
+                        userExercise.getExercise().getDescription(),
+                        userExercise.getExercise().getImage(),
+                        userExercise.getSeries(),
+                        userExercise.getRepetitions(),
+                        userExercise.getObservation()
+                ))
+                .toList();
     }
 
     private void copyDtoToEntity(UserExerciseRequestDTO dto, UserExercise entity) {
