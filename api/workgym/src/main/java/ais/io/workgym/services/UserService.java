@@ -46,6 +46,14 @@ public class UserService {
         return userEntityList.stream().map(UserResponseDTO::new).toList();
     }
 
+    @Transactional
+    public UserResponseDTO findById(UUID id) {
+        User userEntity = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Usuário não encontrado")
+        );
+        return new UserResponseDTO(userEntity);
+    }
+
     private void copyDtoToEntity(UserRequestDTO userRequestDTO, User userEntity) {
         userEntity.setName(userRequestDTO.getName());
         userEntity.setEmail(userRequestDTO.getEmail());

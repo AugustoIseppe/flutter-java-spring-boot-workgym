@@ -38,4 +38,10 @@ public class UserController {
         List<UserResponseDTO> userResponseDTOList = userService.findAll();
         return ResponseEntity.ok(userResponseDTOList);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable UUID id) {
+        UserResponseDTO userResponseDTO = userService.findById(id);
+        return ResponseEntity.ok(userResponseDTO);
+    }
 }
