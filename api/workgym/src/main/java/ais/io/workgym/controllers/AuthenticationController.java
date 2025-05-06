@@ -3,19 +3,19 @@ package ais.io.workgym.controllers;
 import ais.io.workgym.dto.AuthenticationDTO;
 import ais.io.workgym.dto.LoginResponseDTO;
 import ais.io.workgym.dto.RegisterDTO;
+import ais.io.workgym.dto.user.UserDTO;
 import ais.io.workgym.entities.User;
 import ais.io.workgym.infra.security.TokenService;
 import ais.io.workgym.repositories.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -42,7 +42,6 @@ public class AuthenticationController {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-
     }
 
     @PostMapping("/register")
@@ -61,10 +60,21 @@ public class AuthenticationController {
                 data.login(),
                 data.role()
         );
-
-
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getCurrentUser(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").replace("Bearer ", "");
+        String login = tokenService.validateToken(token);
+
+        if (login.isBlank()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        User user = userRepository.findByLogin(login);
+        return ResponseEntity.ok(new UserDTO(user));
     }
 
 }
