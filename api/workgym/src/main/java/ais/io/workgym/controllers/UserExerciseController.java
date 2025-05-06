@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +22,14 @@ public class UserExerciseController {
     private UserExerciseService userExerciseService;
 
     @PostMapping
-    public ResponseEntity<UserExerciseResponseDTO> insert(@RequestBody UserExerciseRequestDTO dto) {
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<UserExerciseResponseDTO> insert(@RequestBody @Valid UserExerciseRequestDTO dto) {
         UserExerciseResponseDTO response = userExerciseService.insert(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<UserExerciseResponseDTO> updateUserExercise(@PathVariable UUID id,
                                                                       @RequestBody @Valid UserExerciseRequestDTO userExerciseRequestDTO) {
         // Chama o service para atualizar o UserExercise
@@ -37,6 +40,7 @@ public class UserExerciseController {
     }
 
     @GetMapping("/{userId}/day/{weekDay}")
+    @PreAuthorize("hasAnyRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<UserExerciseProjectionDTO>> getByUserAndDay(
             @PathVariable UUID userId,
             @PathVariable String weekDay) {
@@ -46,6 +50,7 @@ public class UserExerciseController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<UserExerciseProjectionDTO>> getAll() {
         List<UserExerciseProjectionDTO> list = userExerciseService.findAll();
         return ResponseEntity.ok(list);
