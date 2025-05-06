@@ -14,7 +14,7 @@ public class UserExercise {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User users;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Exercise exercise;
@@ -28,9 +28,9 @@ public class UserExercise {
     public UserExercise() {
     }
 
-    public UserExercise(UUID id, User user, Exercise exercise, WeekDay weekDay, Integer series, Integer repetitions, String observation) {
+    public UserExercise(UUID id, User users, Exercise exercise, WeekDay weekDay, Integer series, Integer repetitions, String observation) {
         this.id = id;
-        this.user = user;
+        this.users = users;
         this.exercise = exercise;
         this.weekDay = weekDay;
         this.series = series;
@@ -47,11 +47,11 @@ public class UserExercise {
     }
 
     public User getUser() {
-        return user;
+        return users;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.users = user;
     }
 
     public Exercise getExercise() {
