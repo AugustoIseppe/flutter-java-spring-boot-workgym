@@ -20,7 +20,7 @@ public interface UserExerciseRepository extends JpaRepository<UserExercise, UUID
     @Query(value = "SELECT e.name, e.description, e.image, ue.series, ue.repetitions, ue.observation " +
             "FROM tb_user_exercise ue " +
             "JOIN tb_exercise e ON ue.exercise_id = e.id " +
-            "WHERE ue.user_id = :userId AND ue.week_day = :weekDay", nativeQuery = true)
+            "WHERE ue.users_id = :userId AND ue.week_day = :weekDay", nativeQuery = true)
     List<Object[]> findRawUserExercisesByUserIdAndWeekDay(@Param("userId") UUID userId, @Param("weekDay") String weekDay);
 
 //    @Query(value = "SELECT e.name, e.description, e.image_url, ue.series, ue.repetitions, ue.observation " +

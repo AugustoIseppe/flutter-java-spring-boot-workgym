@@ -40,7 +40,7 @@ public class UserExerciseController {
     }
 
     @GetMapping("/{userId}/day/{weekDay}")
-    @PreAuthorize("hasAnyRole('ADMIN') or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<UserExerciseProjectionDTO>> getByUserAndDay(
             @PathVariable UUID userId,
             @PathVariable String weekDay) {
