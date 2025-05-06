@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfiguration {
 
     @Autowired
@@ -28,8 +30,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Permitir acesso sem autenticação
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll() // Permitir acesso sem autenticação
-                        .requestMatchers(HttpMethod.POST, "/exercises").permitAll() // Permitir acesso sem autenticação
-                        .requestMatchers(HttpMethod.POST, "/user-exercises").hasRole("ADMIN") // Permitir apenas para ADMIN
                         .anyRequest().authenticated()) // Permitir apenas para usuários autenticados | anyRequest() -> qualquer requisição
                 .addFilterBefore(
                         securityFilter, UsernamePasswordAuthenticationFilter.class
