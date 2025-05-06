@@ -1,8 +1,10 @@
 package ais.io.workgym.controllers;
 
 import ais.io.workgym.dto.AuthenticationDTO;
+import ais.io.workgym.dto.LoginResponseDTO;
 import ais.io.workgym.dto.RegisterDTO;
 import ais.io.workgym.entities.User;
+import ais.io.workgym.infra.security.TokenService;
 import ais.io.workgym.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,18 @@ public class AuthenticationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
         try {
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
             var auth = this.authenticationManager.authenticate(usernamePassword);
 
-            return ResponseEntity.ok().build();
+            var token = tokenService.generateToken((User) auth.getPrincipal());
+
+            return ResponseEntity.ok(new LoginResponseDTO(token));
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
