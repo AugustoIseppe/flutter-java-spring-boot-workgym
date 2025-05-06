@@ -22,13 +22,13 @@ public class UserService  {
     private UserRepository userRepository;
 
 
-    @Transactional
-    public UserResponseDTO insert(UserRequestDTO userRequestDTO) {
-        User userEntity = new User();
-        copyDtoToEntity(userRequestDTO, userEntity);
-        userEntity = userRepository.save(userEntity);
-        return new UserResponseDTO(userEntity);
-    }
+//    @Transactional
+//    public UserResponseDTO insert(UserRequestDTO userRequestDTO) {
+//        User userEntity = new User(data.login(), encryptedPassword, data.name(), data.email(), data.role(), data.cpf());
+//        copyDtoToEntity(userRequestDTO, userEntity);
+//        userEntity = userRepository.save(userEntity);
+//        return new UserResponseDTO(userEntity);
+//    }
 
     @Transactional
     public UserResponseDTO update(UUID id, UserRequestDTO userRequestDTO) {

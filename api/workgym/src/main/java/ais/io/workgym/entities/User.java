@@ -28,7 +28,17 @@ public class User implements UserDetails {
     private String login;
     private UserRole role;
 
-    public User (){}
+    public User() {
+    }
+
+    public User(String name, String email, String password, String cpf, String login, UserRole role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.cpf = cpf;
+        this.login = login;
+        this.role = role;
+    }
 
     public User(UUID id, String name, String email, String password, String cpf, String login, UserRole role) {
         this.id = id;
