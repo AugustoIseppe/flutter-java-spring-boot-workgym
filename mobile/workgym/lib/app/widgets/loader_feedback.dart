@@ -39,7 +39,6 @@ class _LoaderFeedbackState extends State<LoaderFeedback> {
   Widget build(BuildContext context) {
     if (!_visible) return const SizedBox.shrink();
 
-    Color backgroundColor = const Color(0xFF6F1610).withValues(alpha: .9);
     IconData icon;
     switch (widget.state) {
       case LoaderState.success:
