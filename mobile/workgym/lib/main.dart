@@ -1,23 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workgym/screens/home-page.dart';
+import 'package:workgym/app/app_module.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  runApp(const AppModule());
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const HomePage(),
-    );
-  }
-}
-
