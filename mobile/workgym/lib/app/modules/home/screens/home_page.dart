@@ -40,6 +40,37 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final confirmLogout = await showDialog<bool>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Confirmar Logout'),
+                content: const Text('Você tem certeza que deseja sair?'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('Cancelar'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text('Sair'),
+                  ),
+                ],
+              );
+            },
+          );
+
+          if (confirmLogout == true) {
+            context.read<LoginController>().logout(context);
+            Navigator.pushReplacementNamed(context, '/login-page');
+          }
+        },
+        label: const Text('Logout', style: TextStyle(color: Colors.white)),
+        icon: const Icon(Icons.exit_to_app, color: Colors.white),
+        backgroundColor: Colors.redAccent,
+      ),
     );
   }
 }
