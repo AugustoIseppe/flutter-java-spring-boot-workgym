@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:workgym/app/constants/constants.dart';
@@ -43,7 +42,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<bool> tryAutoLogin() async {
     final savedToken = await Store.getString('token');
 
-    if (savedToken == null || savedToken.isEmpty) return false;
+    if (savedToken.isEmpty) return false;
     print(
       "TOKEN SALVO NO SHARED PREFERENCES TRY AUTO LOGINN!!! -> $savedToken",
     );
@@ -96,6 +95,7 @@ class UserRepositoryImpl implements UserRepository {
             throw Exception('Failed to load data');
           }
         })
+        // ignore: body_might_complete_normally_catch_error
         .catchError((error) {
           // ignore: avoid_print
           print('Error GETME: $error');
