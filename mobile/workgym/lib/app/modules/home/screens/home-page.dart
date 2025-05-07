@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workgym/app/data/store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +9,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +35,15 @@ class _HomePageState extends State<HomePage> {
               "Os dados do usuário estão disponíveis na tela de perfil.",
               style: TextStyle(fontSize: 16, color: Colors.grey[700]),
               textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                  final String accessToken = await Store.getString("token");
+                  print(accessToken);
+              },
+              child: const Text('Ir para o Perfil'),
             ),
           ],
         ),
