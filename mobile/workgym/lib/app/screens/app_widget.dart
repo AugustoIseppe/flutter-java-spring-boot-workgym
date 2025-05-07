@@ -2,23 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:workgym/app/screens/home-page.dart';
 
 class AppWidget extends StatefulWidget {
-
-  const AppWidget({ super.key });
+  const AppWidget({super.key});
 
   @override
   State<AppWidget> createState() => _AppWidgetState();
 }
 
 class _AppWidgetState extends State<AppWidget> {
-
-   @override
-   Widget build(BuildContext context) {
-       return MaterialApp(
-          title: 'WorkGym',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: const HomePage(), // Replace with your actual home page widget
-       );
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'WorkGym',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const HomePage(), // Replace with your actual home page widget
+    );
   }
 }
