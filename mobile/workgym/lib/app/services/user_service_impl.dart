@@ -11,6 +11,6 @@ class UserServiceImpl implements UserService {
       _userRepository.login(login, password);
 
   @override
-  Future<Map<String, dynamic>?> tryAutoLogin(String token) =>
-      _userRepository.tryAutoLogin(token);
+  Future<bool> tryAutoLogin() =>
+      _userRepository.tryAutoLogin();
 }
