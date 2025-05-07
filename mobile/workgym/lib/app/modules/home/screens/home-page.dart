@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workgym/app/data/store.dart';
 import 'package:workgym/app/modules/auth/login/login_controller.dart';
 
 class HomePage extends StatefulWidget {
