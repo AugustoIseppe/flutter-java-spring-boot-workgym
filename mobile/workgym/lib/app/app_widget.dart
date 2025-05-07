@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workgym/app/modules/auth/login/login_page.dart';
-import 'package:workgym/app/modules/home/screens/home-page.dart';
+import 'package:workgym/app/modules/home/screens/home_page.dart';
 import 'package:workgym/app/modules/splash/splash_page.dart';
 import 'package:workgym/app/utils/app_routes.dart';
 
