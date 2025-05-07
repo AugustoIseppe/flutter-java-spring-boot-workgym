@@ -1,12 +1,12 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-//String name, String email, String password, String cpf, String login, UserRole role
 class UserModel {
+  String id;
   String name;
   String email;
   String cpf;
   String login;
   String role;
   UserModel({
+    required this.id,
     required this.name,
     required this.email,
     required this.cpf,
@@ -16,6 +16,7 @@ class UserModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'email': email,
       'cpf': cpf,
@@ -26,6 +27,7 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> json) {
     return UserModel(
+      id: json['id'],
       name: json['name'],
       email: json['email'],
       cpf: json['cpf'],
@@ -35,6 +37,7 @@ class UserModel {
   }
 
   UserModel copyWith({
+    String? id,
     String? name,
     String? email,
     String? cpf,
@@ -42,6 +45,7 @@ class UserModel {
     String? role,
   }) {
     return UserModel(
+      id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
       cpf: cpf ?? this.cpf,
@@ -52,6 +56,6 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(name: $name, email: $email, cpf: $cpf, login: $login, role: $role)';
+    return 'UserModel(id: $id, name: $name, email: $email, cpf: $cpf, login: $login, role: $role)';
   }
 }
