@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:workgym/app/data/store.dart';
+import 'package:workgym/app/modules/auth/login/login_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,10 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<LoginController>(context).user;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(18.0),
@@ -20,8 +21,8 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Bem-vindo ao WorkGym!',
+            Text(
+              'Bem-vindo ao WorkGym, ${user?.name}!',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -31,20 +32,12 @@ class _HomePageState extends State<HomePage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            Text(
-              "Os dados do usuário estão disponíveis na tela de perfil.",
-              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-              textAlign: TextAlign.center,
-            ),
+            Text('Email: ${user?.email}', style: TextStyle(fontSize: 18)),
+            Text('Login: ${user?.login}', style: TextStyle(fontSize: 18)),
+            Text('CPF: ${user?.cpf}', style: TextStyle(fontSize: 18)),
+            Text('Role: ${user?.role}', style: TextStyle(fontSize: 18)),
             const SizedBox(height: 20),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                  final String accessToken = await Store.getString("token");
-                  print(accessToken);
-              },
-              child: const Text('Ir para o Perfil'),
-            ),
           ],
         ),
       ),
