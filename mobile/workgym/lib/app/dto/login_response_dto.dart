@@ -10,4 +10,9 @@ class LoginResponseDto {
   Map<String, dynamic> toJson() {
     return {'accessToken': accessToken};
   }
+
+  @override
+  String toString() {
+    return 'LoginResponseDto{accessToken: $accessToken}';
+  }
 }
