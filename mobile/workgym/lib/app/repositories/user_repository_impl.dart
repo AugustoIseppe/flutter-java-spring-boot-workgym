@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:workgym/app/constants/constants.dart';
 import 'package:workgym/app/data/store.dart';
+import 'package:workgym/app/models/user_model.dart';
 import 'package:workgym/app/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -39,10 +40,40 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Map<String, dynamic>?> tryAutoLogin(String token) async {
-    final userData = await Store.getMap("userData");
-    debugPrint("RETORNO API SHARED PREFERENCESSSS!!! -> $userData");
-    return userData;
+  Future<bool> tryAutoLogin() async {
+    final savedToken = await Store.getString('token');
+
+    if (savedToken == null || savedToken.isEmpty) return false;
+    print(
+      "TOKEN SALVO NO SHARED PREFERENCES TRY AUTO LOGINN!!! -> $savedToken",
+    );
+    try {
+      final response = await http.get(
+        Uri.parse(constants.getMeUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $savedToken',
+        },
+      );
+      print('RESPOSTA DO GET ME: ${response.body}');
+      print('STATUS CODE DO GET ME: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> userData = jsonDecode(response.body);
+        // Usando o UserModel para salvar os dados
+        UserModel user = UserModel.fromMap(userData);
+
+        // Salve os dados do usuário no SharedPreferences ou em outro local
+        await Store.saveString('user', jsonEncode(user.toMap()));
+        print("Usuário autenticado automaticamente!");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Erro no tryAutoLogin: $e');
+      return false;
+    }
   }
 
   @override
