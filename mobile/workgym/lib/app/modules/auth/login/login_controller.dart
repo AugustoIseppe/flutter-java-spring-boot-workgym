@@ -10,15 +10,15 @@ class LoginController extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   bool _isSuccess = false;
-  UserModel? _user;  // Adiciona a propriedade que armazena o usuário.
+  UserModel? _user; // Adiciona a propriedade que armazena o usuário.
 
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get success => _isSuccess;
-  UserModel? get user => _user;  // Getter para o usuário
+  UserModel? get user => _user; // Getter para o usuário
 
   LoginController({required UserService userService})
-      : _userService = userService;
+    : _userService = userService;
 
   Future<String> login(String login, String password) async {
     _isLoading = true;
@@ -27,20 +27,30 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _userService.login(login, password);
-      _isSuccess = response.isNotEmpty;
+      // 1. Realiza o login para obter o token
+      final token = await _userService.login(login, password);
+      _isSuccess = token.isNotEmpty;
 
-      // Ao fazer login, armazene os dados do usuário
+      // 2. Se o login for bem-sucedido (token obtido)
       if (_isSuccess) {
-        final userData = jsonDecode(response);
-        _user = UserModel.fromMap(userData);
-        // Salve o usuário no SharedPreferences
+        // 3. Busca os dados do usuário usando o token obtido.
+        //    Assumindo que _userService tem um método getMe(token) que retorna Map<String, dynamic>.
+        //    Se o seu UserService não tiver esse método, você precisará adicioná-lo,
+        //    fazendo com que ele chame o método getMe do seu UserRepository.
+        final Map<String, dynamic> userDataMap = await _userService.getMe(token);
+        
+        // 4. Converte o mapa de dados do usuário para o UserModel
+        _user = UserModel.fromMap(userDataMap);
+        
+        // 5. Salva os dados do usuário no SharedPreferences
         await Store.saveString('user', jsonEncode(_user!.toMap()));
+        print("Dados do usuário salvos após login: ${_user!.toMap()}");
       }
 
-      return response;
+      return token; // Retorna o token como no código original
     } catch (e) {
       _error = 'Erro ao fazer login: $e';
+      _user = null; // Garante que o usuário seja nulo em caso de erro
       return "";
     } finally {
       _isLoading = false;
@@ -55,10 +65,9 @@ class LoginController extends ChangeNotifier {
     try {
       final result = await _userService.tryAutoLogin();
       if (result) {
-        // Ao fazer auto login, carrega os dados do usuário
-        final userData = await Store.getString('user');
-        if (userData.isNotEmpty) {
-          _user = UserModel.fromMap(jsonDecode(userData));
+        final userString = await Store.getString('user');
+        if (userString.isNotEmpty) {
+          _user = UserModel.fromMap(jsonDecode(userString));
         }
       }
       return result;
@@ -68,10 +77,15 @@ class LoginController extends ChangeNotifier {
     }
   }
 
-  // Limpar os dados do usuário se necessário (logout)
-  void logout() {
-    _user = null;
-    Store.remove('user');  // Remover dados do SharedPreferences
+  Future<void> logout(BuildContext context) async {
+    await Store.remove('token');
+    await Store.remove('user');
+
+    _user = null; 
+    _isSuccess = false; 
     notifyListeners();
+
+    Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
   }
 }
+
