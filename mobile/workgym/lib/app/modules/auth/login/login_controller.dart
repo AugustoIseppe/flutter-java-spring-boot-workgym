@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:workgym/app/services/user_service.dart';
-import 'package:workgym/app/dto/login_response_dto.dart';
 
 class LoginController extends ChangeNotifier {
   final UserService _userService;
@@ -14,20 +13,17 @@ class LoginController extends ChangeNotifier {
   LoginController({required UserService userService})
     : _userService = userService;
 
-  Future<LoginResponseDto?> login(String login, String password) async {
+  Future<String> login(String login, String password) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
 
     try {
       final response = await _userService.login(login, password);
-      if (response == null) {
-        _error = 'Usuário ou senha inválidos';
-      }
       return response;
     } catch (e) {
       _error = 'Erro ao fazer login: $e';
-      return null;
+      return "";
     } finally {
       _isLoading = false;
       notifyListeners();
