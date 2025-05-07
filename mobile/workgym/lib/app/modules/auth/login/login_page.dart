@@ -75,14 +75,21 @@ class _LoginPageState extends State<LoginPage> {
                                     if (formValid) {
                                       final email = _emailEC.text;
                                       final password = _passwordEC.text;
+
                                       final token = await context
                                           .read<LoginController>()
                                           .login(email, password);
 
                                       if (token.isNotEmpty) {
-                                        Navigator.of(
-                                          context,
-                                        ).pushReplacementNamed('/home-page');
+                                        // Aguarda o próximo frame para garantir que o estado foi atualizado
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                              Navigator.of(
+                                                context,
+                                              ).pushReplacementNamed(
+                                                '/home-page',
+                                              );
+                                            });
                                       } else {
                                         final error =
                                             context
@@ -100,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                                       }
                                     }
                                   },
+
                                   child: const Text(
                                     'Login',
                                     style: TextStyle(
