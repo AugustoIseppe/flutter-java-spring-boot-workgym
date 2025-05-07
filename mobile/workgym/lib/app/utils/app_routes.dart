@@ -1,5 +1,5 @@
 class AppRoutes {
-  static const loginPage = "/";
+  static const splash = "/"; // Agora a Splash será a rota inicial
+  static const loginPage = "/login-page";
   static const homePage = "/home-page";
-  static const pdfPage = "/pdf-page";
 }
