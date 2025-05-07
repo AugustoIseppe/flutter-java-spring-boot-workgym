@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workgym/app/modules/auth/login/login_page.dart';
+import 'package:workgym/app/modules/home/screens/home-page.dart';
+import 'package:workgym/app/utils/app_routes.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
@@ -15,7 +17,10 @@ class _AppWidgetState extends State<AppWidget> {
       debugShowCheckedModeBanner: false,
       title: 'WorkGym',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const LoginPage(), // Replace with your actual home page widget
+      routes: {
+        AppRoutes.loginPage: (context) => const LoginPage(),
+        AppRoutes.homePage: (context) => const HomePage(),
+      },
     );
   }
 }
