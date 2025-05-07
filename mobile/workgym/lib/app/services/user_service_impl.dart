@@ -11,6 +11,13 @@ class UserServiceImpl implements UserService {
       _userRepository.login(login, password);
 
   @override
-  Future<bool> tryAutoLogin() =>
-      _userRepository.tryAutoLogin();
+  Future<bool> tryAutoLogin() => _userRepository.tryAutoLogin();
+
+  // Implementação do método getMe no UserServiceImpl
+  @override
+  Future<Map<String, dynamic>> getMe(String token) {
+    // Delega a chamada para o método getMe do UserRepository
+    // que já está implementado no seu UserRepositoryImpl.dart
+    return _userRepository.getMe(token);
+  }
 }
