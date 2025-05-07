@@ -58,8 +58,7 @@ public class AuthenticationController {
                 encryptedPassword,
                 data.cpf(),
                 data.login(),
-                data.role()
-        );
+                data.role());
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully");
     }
