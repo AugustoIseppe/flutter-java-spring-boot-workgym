@@ -57,7 +57,7 @@ class LoginController extends ChangeNotifier {
       if (result) {
         // Ao fazer auto login, carrega os dados do usuário
         final userData = await Store.getString('user');
-        if (userData != null && userData.isNotEmpty) {
+        if (userData.isNotEmpty) {
           _user = UserModel.fromMap(jsonDecode(userData));
         }
       }
