@@ -109,5 +109,11 @@ public class UserExerciseService {
         entity.setRepetitions(dto.getRepetitions());
         entity.setObservation(dto.getObservation());
     }
+
+    public List<String> getOrderedWeekDaysByUser(UUID userId) {
+        return userExerciseRepository.findDistinctWeekDaysByUserIdOrdered(userId);
+    }
+
+
 }
 

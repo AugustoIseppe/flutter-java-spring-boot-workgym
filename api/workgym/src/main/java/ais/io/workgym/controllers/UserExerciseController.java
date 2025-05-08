@@ -55,4 +55,12 @@ public class UserExerciseController {
         List<UserExerciseProjectionDTO> list = userExerciseService.findAll();
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/{userId}/weekdays")
+    @PreAuthorize("hasAnyRole('ADMIN') or hasRole('USER')")
+    public ResponseEntity<List<String>> getWeekDaysByUser(@PathVariable UUID userId) {
+        List<String> orderedWeekDays = userExerciseService.getOrderedWeekDaysByUser(userId);
+        return ResponseEntity.ok(orderedWeekDays);
+    }
+
 }
