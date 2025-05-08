@@ -54,8 +54,6 @@ class UserRepositoryImpl implements UserRepository {
           'Authorization': 'Bearer $savedToken',
         },
       );
-      print('RESPOSTA DO GET ME: ${response.body}');
-      print('STATUS CODE DO GET ME: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> userData = jsonDecode(response.body);
@@ -64,7 +62,6 @@ class UserRepositoryImpl implements UserRepository {
 
         // Salve os dados do usuário no SharedPreferences ou em outro local
         await Store.saveString('user', jsonEncode(user.toMap()));
-        print("Usuário autenticado automaticamente!");
         return true;
       } else {
         return false;
@@ -101,5 +98,31 @@ class UserRepositoryImpl implements UserRepository {
           print('Error GETME: $error');
           // rethrow;
         });
+  }
+
+  @override
+  Future<List<String>> getWeekDay(String userId) async {
+    try {
+      final savedToken = await Store.getString('token');
+      final response = await http.get(
+        Uri.parse('${constants.getWeekDayUrl}/$userId/weekdays'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $savedToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> decodedBody = jsonDecode(response.body);
+        final List<String> weekDays = decodedBody.cast<String>().toList();
+        print("Dias da semana (API): $weekDays"); // Log para debug
+        return weekDays;
+      } else {
+        throw Exception('Erro ao carregar: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro no repositório getWeekDay: $e');
+      return [];
+    }
   }
 }

@@ -20,4 +20,9 @@ class UserServiceImpl implements UserService {
     // que já está implementado no seu UserRepositoryImpl.dart
     return _userRepository.getMe(token);
   }
+  
+  @override
+  Future<List<String>> getWeekDay(String userId) =>
+      _userRepository.getWeekDay(userId);
+
 }
