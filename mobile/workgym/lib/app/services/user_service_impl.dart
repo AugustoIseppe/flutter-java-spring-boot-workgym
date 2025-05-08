@@ -1,3 +1,4 @@
+import 'package:workgym/app/models/user_exercise_model.dart';
 import 'package:workgym/app/repositories/user_repository.dart';
 import 'package:workgym/app/services/user_service.dart';
 
@@ -25,4 +26,7 @@ class UserServiceImpl implements UserService {
   Future<List<String>> getWeekDay(String userId) =>
       _userRepository.getWeekDay(userId);
 
+  @override
+  Future<List<UserExerciseModel>> getExercises(String userId, String weekDay) =>
+      _userRepository.getExercises(userId, weekDay);
 }
