@@ -37,11 +37,13 @@ class LoginController extends ChangeNotifier {
         //    Assumindo que _userService tem um método getMe(token) que retorna Map<String, dynamic>.
         //    Se o seu UserService não tiver esse método, você precisará adicioná-lo,
         //    fazendo com que ele chame o método getMe do seu UserRepository.
-        final Map<String, dynamic> userDataMap = await _userService.getMe(token);
-        
+        final Map<String, dynamic> userDataMap = await _userService.getMe(
+          token,
+        );
+
         // 4. Converte o mapa de dados do usuário para o UserModel
         _user = UserModel.fromMap(userDataMap);
-        
+
         // 5. Salva os dados do usuário no SharedPreferences
         await Store.saveString('user', jsonEncode(_user!.toMap()));
         print("Dados do usuário salvos após login: ${_user!.toMap()}");
@@ -81,11 +83,21 @@ class LoginController extends ChangeNotifier {
     await Store.remove('token');
     await Store.remove('user');
 
-    _user = null; 
-    _isSuccess = false; 
+    _user = null;
+    _isSuccess = false;
     notifyListeners();
 
     Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
   }
-}
 
+  Future<List<String>> getWeekDay(String userId) async {
+    try {
+      final weekDays = await _userService.getWeekDay(userId);
+      print("Dias da semana (Controller): $weekDays"); // Log para debug
+      return weekDays;
+    } catch (e) {
+      print('Erro no controller: $e');
+      return [];
+    }
+  }
+}
