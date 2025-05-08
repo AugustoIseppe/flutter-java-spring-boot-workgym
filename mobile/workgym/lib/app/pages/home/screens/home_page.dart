@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workgym/app/controllers/login_controller.dart';
+import 'package:workgym/app/pages/weekday/week_day.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -85,8 +86,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // Navigator.pushNamed(context, '/meus-treinos-page');
-                            print('Navegando para a página Meus Treinos');
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => WeekDay( )));
                           },
                           child: SizedBox(
                             width: 160,
@@ -240,30 +240,11 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 40),
               //container com imagem de fundo
-              Container(
-                width: double.infinity,
-                height: 200,
-                decoration: BoxDecoration(
-                  image: const DecorationImage(
-                    image: AssetImage('assets/images/logo-sem-bg.png'),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withAlpha(50),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    
-                  ],
-                ),
+              Image.asset(
+                'assets/images/testelogo.png',
+                fit: BoxFit.fitWidth,
+                width: 200,
+                height: 150,
               ),
             ],
           ),
