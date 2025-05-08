@@ -11,12 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  static const IconData alarm = IconData(
-  0xf4d5,
-  fontFamily: 'MaterialIcons',
-  fontPackage: 'flutter_material_icons',
-);
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<LoginController>(context).user;
@@ -53,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Text(
-                      '${user?.login}!' ?? 'Usuário não encontrado',
+                      '${user?.login}!',
                       style: GoogleFonts.merriweather(
                         textStyle: TextStyle(
                           color: Colors.white,
