@@ -1,0 +1,144 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:workgym/app/controllers/login_controller.dart';
+
+class WeekDay extends StatefulWidget {
+  const WeekDay({super.key});
+
+  @override
+  State<WeekDay> createState() => _WeekDayState();
+}
+
+class _WeekDayState extends State<WeekDay> {
+  late Future<List<String>> _weekDaysFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    final user = Provider.of<LoginController>(context, listen: false).user;
+    final userId = user?.id;
+    if (userId != null) {
+      _weekDaysFuture = Provider.of<LoginController>(
+        context,
+        listen: false,
+      ).getWeekDay(userId);
+    } else {
+      _weekDaysFuture = Future.value([]);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF0f2d57),
+        elevation: 10,
+        shadowColor: Colors.black,
+        titleSpacing: 2,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'Treinos da Semana',
+          style: GoogleFonts.merriweather(
+            textStyle: TextStyle(
+              color: Colors.white,
+              letterSpacing: .5,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/bg-home-page.png'),
+                    fit: BoxFit.fill,
+                    onError: (exception, stackTrace) {
+                      // Lidar com o erro de carregamento da imagem aqui, se necessário
+                      print('Erro ao carregar a imagem: $exception');
+                    },
+                  ),
+                ),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Center(
+              child: FutureBuilder<List<String>>(
+                future: _weekDaysFuture,
+                builder: (context, snapshot) {
+                  // Logs para debug
+                  print("Snapshot data: ${snapshot.data}");
+                  print("Snapshot hasData: ${snapshot.hasData}");
+                  print("Snapshot error: ${snapshot.error}");
+              
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+              
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Erro: ${snapshot.error}'));
+                  }
+              
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text('Nenhum dia de treino encontrado.'),
+                    );
+                  }
+              
+                  // Remove a ordenação manual, pois os dados já vêm ordenados
+                  final weekDays = snapshot.data!;
+              
+                  return SizedBox(
+                    height: 550,
+                    child: ListView.builder(
+                      itemCount: weekDays.length,
+                      itemBuilder: (context, index) {
+                        final day = weekDays[index];
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withAlpha(100),
+                                blurRadius: 10,
+                                offset: const Offset(0, 0),
+                              ),
+                            ],
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              day,
+                              style: GoogleFonts.merriweather(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  letterSpacing: .5,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+            Image.asset(
+                'assets/images/testelogo.png',
+                fit: BoxFit.fitWidth,
+                width: 200,
+                height: 150,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
