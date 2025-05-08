@@ -16,7 +16,7 @@ class TodoListField extends StatelessWidget {
     required this.label,
     this.obscureText = false,
     this.suffixIconButton,
-    ValueNotifier<bool>? obscureTextVN, // Permitir um valor opcional
+    ValueNotifier<bool>? obscureTextVN,
     this.controller,
     this.validator,
     this.focusNode,
@@ -35,25 +35,43 @@ class TodoListField extends StatelessWidget {
           focusNode: focusNode,
           controller: controller,
           validator: validator,
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             labelText: label,
-            labelStyle: const TextStyle(color: Colors.black),
+            labelStyle: const TextStyle(color: Colors.white70, fontSize: 16),
+            filled: true,
+            fillColor: Colors.white.withValues(alpha: .05),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: Colors.white.withValues(alpha: .05),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Colors.blueAccent,
+                width: 1.5,
+              ),
+            ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: Colors.red),
             ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.redAccent),
             ),
             isDense: true,
             suffixIcon: suffixIconButton ??
-                (obscureText == true
+                (obscureText
                     ? IconButton(
                         icon: Icon(
-                          !obscureTextValue
-                              ? Icons.access_alarm
-                              : Icons.add_circle_sharp,
-                          size: 15,
+                          obscureTextValue
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          size: 18,
+                          color: Colors.white70,
                         ),
                         onPressed: () {
                           obscureTextVN.value = !obscureTextValue;
@@ -67,3 +85,4 @@ class TodoListField extends StatelessWidget {
     );
   }
 }
+
