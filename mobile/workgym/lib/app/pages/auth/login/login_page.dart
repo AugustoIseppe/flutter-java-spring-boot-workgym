@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 import 'package:validatorless/validatorless.dart';
-import 'package:workgym/app/pages/auth/login/login_controller.dart';
+import 'package:workgym/app/controllers/login_controller.dart';
 import 'package:workgym/app/widgets/gradient_button.dart';
 import 'package:workgym/app/widgets/loader.dart';
 import 'package:workgym/app/widgets/todo_list_field.dart';

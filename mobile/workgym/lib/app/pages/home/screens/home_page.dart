@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:workgym/app/pages/auth/login/login_controller.dart';
+import 'package:workgym/app/controllers/login_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

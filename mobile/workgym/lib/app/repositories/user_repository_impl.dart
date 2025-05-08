@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:workgym/app/constants/constants.dart';
-import 'package:workgym/app/data/store.dart';
+import 'package:workgym/app/utils/constants/constants.dart';
+import 'package:workgym/app/utils/store.dart';
 import 'package:workgym/app/models/user_model.dart';
 import 'package:workgym/app/repositories/user_repository.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:workgym/app/services/user_service.dart';
 import 'package:workgym/app/models/user_model.dart';
 import 'dart:convert';
-import 'package:workgym/app/data/store.dart';
+import 'package:workgym/app/utils/store.dart';
 
 class LoginController extends ChangeNotifier {
   final UserService _userService;
