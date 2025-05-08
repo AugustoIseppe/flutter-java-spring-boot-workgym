@@ -3,5 +3,5 @@ class AppRoutes {
   static const loginPage = "/login-page";
   static const homePage = "/home-page";
   static const weekDay = "/week-day";
-  static const weekDayDetail = "/week-day-detail";
+  static const weekDayTrainingDetail = "/week-day-training-detail";
 }
