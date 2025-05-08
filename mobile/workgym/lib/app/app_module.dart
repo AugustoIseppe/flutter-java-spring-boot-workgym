@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workgym/app/app_widget.dart';
-import 'package:workgym/app/modules/auth/login/login_controller.dart';
+import 'package:workgym/app/pages/auth/login/login_controller.dart';
 import 'package:workgym/app/repositories/user_repository.dart';
 import 'package:workgym/app/repositories/user_repository_impl.dart';
 import 'package:workgym/app/services/user_service.dart';

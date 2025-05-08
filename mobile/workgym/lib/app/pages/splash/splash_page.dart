@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:workgym/app/modules/auth/login/login_controller.dart';
+import 'package:workgym/app/pages/auth/login/login_controller.dart';
 import 'package:workgym/app/utils/app_routes.dart';
 
 class SplashPage extends StatefulWidget {
