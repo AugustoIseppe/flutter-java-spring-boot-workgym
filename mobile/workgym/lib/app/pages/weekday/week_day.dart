@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workgym/app/controllers/login_controller.dart';
+import 'package:workgym/app/pages/weekday/week_day_training_detail.dart';
 
 class WeekDay extends StatefulWidget {
   const WeekDay({super.key});
@@ -97,30 +98,42 @@ class _WeekDayState extends State<WeekDay> {
                       itemCount: weekDays.length,
                       itemBuilder: (context, index) {
                         final day = weekDays[index];
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withAlpha(100),
-                                blurRadius: 10,
-                                offset: const Offset(0, 0),
+                        return InkWell(
+                          onTap: () {
+                            // Navegar para a página de detalhes do treino do dia
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return WeekDayTrainingDetail(weekDay: day);
+                            }));
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1,
                               ),
-                            ],
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              day,
-                              style: GoogleFonts.merriweather(
-                                textStyle: TextStyle(
-                                  color: Colors.white,
-                                  letterSpacing: .5,
-                                  fontSize: 20,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withAlpha(100),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 0),
                                 ),
+                              ],
+                            ),
+                            child: ListTile(
+                              title: Text(
+                                day,
+                                style: GoogleFonts.merriweather(
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    letterSpacing: .5,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
                         );
