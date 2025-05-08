@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:workgym/app/models/user_exercise_model.dart';
 
 import 'package:workgym/app/utils/constants/constants.dart';
 import 'package:workgym/app/utils/store.dart';
@@ -125,4 +126,36 @@ class UserRepositoryImpl implements UserRepository {
       return [];
     }
   }
+
+  @override
+Future<List<UserExerciseModel>> getExercises(String userId, String weekDay) async {
+  try {
+    final savedToken = await Store.getString('token');
+    final url = '${constants.getWeekDayUrl}/$userId/day/$weekDay';
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $savedToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> decodedJson = jsonDecode(response.body);
+      final List<UserExerciseModel> exercises = decodedJson
+          .map((exercise) => UserExerciseModel.fromJson(exercise))
+          .toList();
+
+      print("Exercícios do dia $weekDay para o usuário $userId: $exercises");
+      return exercises;
+    } else {
+      throw Exception('Erro ao buscar exercícios: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Erro em getExercises: $e');
+    return [];
+  }
+}
+
 }
