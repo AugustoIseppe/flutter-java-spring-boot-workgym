@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workgym/app/models/user_exercise_model.dart';
 import 'package:workgym/app/services/user_service.dart';
 import 'package:workgym/app/models/user_model.dart';
 import 'dart:convert';
@@ -95,6 +96,17 @@ class LoginController extends ChangeNotifier {
       final weekDays = await _userService.getWeekDay(userId);
       print("Dias da semana (Controller): $weekDays"); // Log para debug
       return weekDays;
+    } catch (e) {
+      print('Erro no controller: $e');
+      return [];
+    }
+  }
+
+  Future<List<UserExerciseModel>> getExercises(String userId, String weekDay) async {
+    try {
+      final exercises = await _userService.getExercises(userId, weekDay);
+      print("Exercícios (Controller): $exercises"); // Log para debug
+      return exercises;
     } catch (e) {
       print('Erro no controller: $e');
       return [];
