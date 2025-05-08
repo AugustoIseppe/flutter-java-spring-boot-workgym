@@ -83,36 +83,42 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 160,
-                          height: 160,
-                          child: Card(
-                            color: Colors.white.withAlpha(2),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.fitness_center,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Meus Treinos',
-                                      style: GoogleFonts.merriweather(
-                                        textStyle: TextStyle(
-                                          color: Colors.white,
-                                          letterSpacing: .5,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      textAlign: TextAlign.center,
+                        InkWell(
+                          onTap: () {
+                            // Navigator.pushNamed(context, '/meus-treinos-page');
+                            print('Navegando para a página Meus Treinos');
+                          },
+                          child: SizedBox(
+                            width: 160,
+                            height: 160,
+                            child: Card(
+                              color: Colors.white.withAlpha(2),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.fitness_center,
+                                      size: 50,
+                                      color: Colors.white,
                                     ),
-                                  ),
-                                ],
+                                    Center(
+                                      child: Text(
+                                        'Meus Treinos',
+                                        style: GoogleFonts.merriweather(
+                                          textStyle: TextStyle(
+                                            color: Colors.white,
+                                            letterSpacing: .5,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
