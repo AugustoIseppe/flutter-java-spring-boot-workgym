@@ -16,23 +16,43 @@ public interface UserExerciseRepository extends JpaRepository<UserExercise, UUID
     List<Object[]> findRawUserExercisesByUserIdAndWeekDay(@Param("userId") UUID userId, @Param("weekDay") String weekDay);
 
     @Query(value = """
-                    SELECT week_day
-                           FROM (
-                             SELECT DISTINCT week_day
-                             FROM tb_user_exercise
-                             WHERE users_id = '21c3c3e2-acef-455a-817d-4d4ee725b006'
-                           ) AS dias
-                           ORDER BY\s
-                             CASE week_day
-                               WHEN 'SEGUNDA' THEN 1
-                               WHEN 'TERCA' THEN 2
-                               WHEN 'QUARTA' THEN 3
-                               WHEN 'QUINTA' THEN 4
-                               WHEN 'SEXTA' THEN 5
-                               WHEN 'SABADO' THEN 6
-                               WHEN 'DOMINGO' THEN 7
-                             END
+            SELECT week_day
+            FROM (
+                SELECT DISTINCT week_day
+                FROM tb_user_exercise
+                WHERE users_id = :userId
+            ) AS dias
+            ORDER BY
+                CASE week_day
+                    WHEN 'SEGUNDA' THEN 1
+                    WHEN 'TERCA' THEN 2
+                    WHEN 'QUARTA' THEN 3
+                    WHEN 'QUINTA' THEN 4
+                    WHEN 'SEXTA' THEN 5
+                    WHEN 'SABADO' THEN 6
+                    WHEN 'DOMINGO' THEN 7
+                END
             """, nativeQuery = true)
     List<String> findDistinctWeekDaysByUserIdOrdered(@Param("userId") UUID userId);
+
+//    @Query(value = """
+//                    SELECT week_day
+//                           FROM (
+//                             SELECT DISTINCT week_day
+//                             FROM tb_user_exercise
+//                             WHERE users_id = '21c3c3e2-acef-455a-817d-4d4ee725b006'
+//                           ) AS dias
+//                           ORDER BY\s
+//                             CASE week_day
+//                               WHEN 'SEGUNDA' THEN 1
+//                               WHEN 'TERCA' THEN 2
+//                               WHEN 'QUARTA' THEN 3
+//                               WHEN 'QUINTA' THEN 4
+//                               WHEN 'SEXTA' THEN 5
+//                               WHEN 'SABADO' THEN 6
+//                               WHEN 'DOMINGO' THEN 7
+//                             END
+//            """, nativeQuery = true)
+//    List<String> findDistinctWeekDaysByUserIdOrdered(@Param("userId") UUID userId);
 
 }
