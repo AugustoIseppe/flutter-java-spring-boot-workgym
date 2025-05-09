@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workgym/app/controllers/login_controller.dart';
+import 'package:workgym/app/pages/userdata/user_data.dart';
 import 'package:workgym/app/pages/weekday/week_day.dart';
+import 'package:workgym/app/widgets/home_card_component.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -84,78 +86,17 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => WeekDay( )));
-                          },
-                          child: SizedBox(
-                            width: 160,
-                            height: 160,
-                            child: Card(
-                              color: Colors.white.withAlpha(2),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.fitness_center,
-                                      size: 50,
-                                      color: Colors.white,
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        'Meus Treinos',
-                                        style: GoogleFonts.merriweather(
-                                          textStyle: TextStyle(
-                                            color: Colors.white,
-                                            letterSpacing: .5,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        buildHomeCard(
+                          label: 'Treinos',
+                          icon: Icons.fitness_center,
+                          context: context,
+                          destination: const WeekDay(),
                         ),
-                        SizedBox(
-                          width: 160,
-                          height: 160,
-                          child: Card(
-                            color: Colors.white.withAlpha(2),
-                            // width: 150,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.person,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Meus Dados',
-                                      style: GoogleFonts.merriweather(
-                                        textStyle: TextStyle(
-                                          color: Colors.white,
-                                          letterSpacing: .5,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                        buildHomeCard(
+                          label: 'Dados do Usuário',
+                          icon: Icons.person,
+                          context: context,
+                          destination: const UserData(),
                         ),
                       ],
                     ),
@@ -163,75 +104,17 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 160,
-                          height: 160,
-                          child: Card(
-                            color: Colors.white.withAlpha(2),
-                            // width: 150,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.punch_clock,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Horários',
-                                      style: GoogleFonts.merriweather(
-                                        textStyle: TextStyle(
-                                          color: Colors.white,
-                                          letterSpacing: .5,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                        buildHomeCard(
+                          label: 'Horários',
+                          icon: Icons.access_time,
+                          context: context,
+                          destination: const WeekDay(),
                         ),
-                        SizedBox(
-                          width: 160,
-                          height: 160,
-                          child: Card(
-                            color: Colors.white.withAlpha(2),
-                            // width: 150,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.business,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Nossos Serviços',
-                                      style: GoogleFonts.merriweather(
-                                        textStyle: TextStyle(
-                                          color: Colors.white,
-                                          letterSpacing: .5,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                        buildHomeCard(
+                          label: 'Planos',
+                          icon: Icons.card_membership,
+                          context: context,
+                          destination: const WeekDay(),
                         ),
                       ],
                     ),
