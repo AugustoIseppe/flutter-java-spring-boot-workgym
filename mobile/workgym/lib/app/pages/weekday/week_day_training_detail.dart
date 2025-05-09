@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workgym/app/controllers/login_controller.dart';
 import 'package:workgym/app/models/user_exercise_model.dart';
+import 'package:workgym/app/pages/training/training_details.dart';
 
 class WeekDayTrainingDetail extends StatefulWidget {
   final String? weekDay;
@@ -83,8 +84,12 @@ class _WeekDayTrainingDetailState extends State<WeekDayTrainingDetail> {
                   final exercise = exercises[index];
                   return InkWell(
                     onTap: () {
-                      // Navegar para a página de detalhes do exercício
-                      
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return TrainingDetails(
+                            userExerciseModel: exercise,
+                            weekDay: widget.weekDay,
+                          );
+                        }));
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(
