@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:workgym/app/pages/auth/login/login_page.dart';
 import 'package:workgym/app/pages/home/screens/home_page.dart';
 import 'package:workgym/app/pages/splash/splash_page.dart';
+import 'package:workgym/app/pages/training/training_details.dart';
 import 'package:workgym/app/pages/weekday/week_day.dart';
 import 'package:workgym/app/pages/weekday/week_day_training_detail.dart';
 import 'package:workgym/app/utils/app_routes.dart';
@@ -27,6 +28,11 @@ class _AppWidgetState extends State<AppWidget> {
         AppRoutes.weekDay: (context) => const WeekDay( ),
         AppRoutes.weekDayTrainingDetail: (context) => WeekDayTrainingDetail( 
           weekDay: null,
+        ),
+        AppRoutes.trainingDetails: (context) => const TrainingDetails( 
+            
+            userExerciseModel: null,
+            weekDay: null,
         ),
       },
     );
