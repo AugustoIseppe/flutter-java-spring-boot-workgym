@@ -5,4 +5,5 @@ class AppRoutes {
   static const weekDay = "/week-day";
   static const weekDayTrainingDetail = "/week-day-training-detail";
   static const trainingDetails = "/training-details";
+  static const userData = "/user-data";
 }
