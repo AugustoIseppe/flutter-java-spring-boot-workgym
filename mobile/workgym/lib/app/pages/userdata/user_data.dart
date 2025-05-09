@@ -20,7 +20,7 @@ class _UserDataState extends State<UserData> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Color(0xFF0f2d57),
+        backgroundColor: Color.fromARGB(255, 13, 26, 45),
         elevation: 10,
         shadowColor: Colors.black,
         titleSpacing: 2,
@@ -48,9 +48,10 @@ class _UserDataState extends State<UserData> {
                 image: AssetImage('assets/images/bg-home-page.png'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                  Colors.black.withValues(alpha: .5),
-                  BlendMode.darken,
-                ),
+                Color.fromARGB(255, 13, 55, 118),
+                // BlendMode.multiply,
+                BlendMode.modulate,
+              ),
               ),
             ),
           ),

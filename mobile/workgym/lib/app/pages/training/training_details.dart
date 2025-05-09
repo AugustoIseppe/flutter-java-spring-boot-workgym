@@ -22,7 +22,7 @@ class _TrainingDetailsState extends State<TrainingDetails> {
     final exercise = widget.userExerciseModel;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF0f2d57),
+       backgroundColor: Color.fromARGB(255, 13, 26, 45),
         elevation: 10,
         shadowColor: Colors.black,
         titleSpacing: 2,
@@ -49,6 +49,11 @@ class _TrainingDetailsState extends State<TrainingDetails> {
           image: DecorationImage(
             image: AssetImage('assets/images/bg-home-page.png'),
             fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Color.fromARGB(255, 13, 55, 118),
+              // BlendMode.multiply,
+              BlendMode.modulate,
+            ),
           ),
         ),
         child: Column(

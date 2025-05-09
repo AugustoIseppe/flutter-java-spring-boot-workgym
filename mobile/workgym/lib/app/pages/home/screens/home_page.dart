@@ -29,6 +29,11 @@ class _HomePageState extends State<HomePage> {
             image: DecorationImage(
               image: AssetImage('assets/images/bg-home-page.png'),
               fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Color.fromARGB(255, 13, 55, 118),
+                // BlendMode.multiply,
+                BlendMode.modulate,
+              ),
             ),
           ),
           child: Column(

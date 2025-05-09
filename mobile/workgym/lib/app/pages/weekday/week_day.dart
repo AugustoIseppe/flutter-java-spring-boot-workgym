@@ -33,7 +33,7 @@ class _WeekDayState extends State<WeekDay> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF0f2d57),
+        backgroundColor: Color.fromARGB(255, 13, 26, 45),
         elevation: 10,
         shadowColor: Colors.black,
         titleSpacing: 2,
@@ -54,15 +54,16 @@ class _WeekDayState extends State<WeekDay> {
       ),
       body: Container(
         decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/bg-home-page.png'),
-                    fit: BoxFit.fill,
-                    onError: (exception, stackTrace) {
-                      // Lidar com o erro de carregamento da imagem aqui, se necessário
-                      print('Erro ao carregar a imagem: $exception');
-                    },
-                  ),
-                ),
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg-home-page.png'),
+            fit: BoxFit.fill,
+            colorFilter: ColorFilter.mode(
+              Color.fromARGB(255, 13, 55, 118),
+              // BlendMode.multiply,
+              BlendMode.modulate,
+            ),
+          ),
+        ),
         child: Column(
           children: [
             const SizedBox(height: 20),
@@ -74,24 +75,24 @@ class _WeekDayState extends State<WeekDay> {
                   print("Snapshot data: ${snapshot.data}");
                   print("Snapshot hasData: ${snapshot.hasData}");
                   print("Snapshot error: ${snapshot.error}");
-              
+
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   }
-              
+
                   if (snapshot.hasError) {
                     return Center(child: Text('Erro: ${snapshot.error}'));
                   }
-              
+
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return const Center(
                       child: Text('Nenhum dia de treino encontrado.'),
                     );
                   }
-              
+
                   // Remove a ordenação manual, pois os dados já vêm ordenados
                   final weekDays = snapshot.data!;
-              
+
                   return SizedBox(
                     height: 550,
                     child: ListView.builder(
@@ -101,16 +102,21 @@ class _WeekDayState extends State<WeekDay> {
                         return InkWell(
                           onTap: () {
                             // Navegar para a página de detalhes do treino do dia
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return WeekDayTrainingDetail(weekDay: day);
-                            }));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return WeekDayTrainingDetail(weekDay: day);
+                                },
+                              ),
+                            );
                           },
                           child: Card(
-                      color: Colors.white10,
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
+                            color: Colors.white10,
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
                             child: ListTile(
                               title: Text(
                                 day,
@@ -133,11 +139,11 @@ class _WeekDayState extends State<WeekDay> {
               ),
             ),
             Image.asset(
-                'assets/images/testelogo.png',
-                fit: BoxFit.fitWidth,
-                width: 200,
-                height: 150,
-              ),
+              'assets/images/testelogo.png',
+              fit: BoxFit.fitWidth,
+              width: 200,
+              height: 150,
+            ),
           ],
         ),
       ),

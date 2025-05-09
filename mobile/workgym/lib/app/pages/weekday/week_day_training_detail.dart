@@ -36,7 +36,7 @@ class _WeekDayTrainingDetailState extends State<WeekDayTrainingDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF0f2d57),
+        backgroundColor: Color.fromARGB(255, 13, 26, 45),
         elevation: 10,
         shadowColor: Colors.black,
         titleSpacing: 2,
@@ -61,10 +61,11 @@ class _WeekDayTrainingDetailState extends State<WeekDayTrainingDetail> {
             image: AssetImage('assets/images/bg-home-page.png'),
             fit: BoxFit.fill,
             opacity: 1,
-            onError: (exception, stackTrace) {
-              // Lidar com o erro de carregamento da imagem aqui, se necessário
-              print('Erro ao carregar a imagem: $exception');
-            },
+            colorFilter: ColorFilter.mode(
+              Color.fromARGB(255, 13, 55, 118),
+              // BlendMode.multiply,
+              BlendMode.modulate,
+            ),
           ),
         ),
         child: FutureBuilder(
