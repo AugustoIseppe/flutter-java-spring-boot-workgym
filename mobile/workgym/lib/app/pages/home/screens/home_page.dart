@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workgym/app/controllers/login_controller.dart';
+import 'package:workgym/app/pages/plans/plans_page.dart';
+import 'package:workgym/app/pages/schedules/schedules_page.dart';
 import 'package:workgym/app/pages/userdata/user_data.dart';
 import 'package:workgym/app/pages/weekday/week_day.dart';
 import 'package:workgym/app/widgets/home_card_component.dart';
@@ -108,13 +110,13 @@ class _HomePageState extends State<HomePage> {
                           label: 'Horários',
                           icon: Icons.access_time,
                           context: context,
-                          destination: const WeekDay(),
+                          destination: const SchedulesPage(),
                         ),
                         buildHomeCard(
                           label: 'Planos',
                           icon: Icons.card_membership,
                           context: context,
-                          destination: const WeekDay(),
+                          destination: const PlansPage(),
                         ),
                       ],
                     ),
