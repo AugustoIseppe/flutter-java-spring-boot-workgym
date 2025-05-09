@@ -26,7 +26,7 @@ Widget buildHomeCard({
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(icon, size: 50, color: Colors.white),
+              Icon(icon, size: 40, color: Colors.white),
               Center(
                 child: Text(
                   label,
@@ -34,7 +34,7 @@ Widget buildHomeCard({
                     textStyle: TextStyle(
                       color: Colors.white,
                       letterSpacing: .5,
-                      fontSize: 20,
+                      fontSize: 16,
                     ),
                   ),
                   textAlign: TextAlign.center,
