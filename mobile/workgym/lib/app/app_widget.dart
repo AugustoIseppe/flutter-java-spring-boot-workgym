@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:workgym/app/pages/auth/login/login_page.dart';
 import 'package:workgym/app/pages/home/screens/home_page.dart';
+import 'package:workgym/app/pages/plans/plans_page.dart';
+import 'package:workgym/app/pages/schedules/schedules_page.dart';
 import 'package:workgym/app/pages/splash/splash_page.dart';
 import 'package:workgym/app/pages/training/training_details.dart';
 import 'package:workgym/app/pages/userdata/user_data.dart';
@@ -36,6 +38,8 @@ class _AppWidgetState extends State<AppWidget> {
             weekDay: null,
         ),
         AppRoutes.userData: (context) => const UserData(),
+        AppRoutes.plans: (context) => const PlansPage(),
+        AppRoutes.schedules: (context) => const SchedulesPage(),
       },
     );
   }
