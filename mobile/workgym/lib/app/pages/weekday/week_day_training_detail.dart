@@ -91,23 +91,11 @@ class _WeekDayTrainingDetailState extends State<WeekDayTrainingDetail> {
                           );
                         }));
                     },
-                    child: Container(
+                    child: Card(
+                      color: Colors.white10,
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
-                      ),
-                      width: double.infinity,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.white, width: 1),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(100),
-                            blurRadius: 10,
-                            offset: const Offset(0, 0),
-                          ),
-                        ],
+                        horizontal: 16,
+                        vertical: 8,
                       ),
                       child: Center(
                         child: ListTile(
