@@ -3,6 +3,7 @@ import 'package:workgym/app/pages/auth/login/login_page.dart';
 import 'package:workgym/app/pages/home/screens/home_page.dart';
 import 'package:workgym/app/pages/splash/splash_page.dart';
 import 'package:workgym/app/pages/training/training_details.dart';
+import 'package:workgym/app/pages/userdata/user_data.dart';
 import 'package:workgym/app/pages/weekday/week_day.dart';
 import 'package:workgym/app/pages/weekday/week_day_training_detail.dart';
 import 'package:workgym/app/utils/app_routes.dart';
@@ -34,6 +35,7 @@ class _AppWidgetState extends State<AppWidget> {
             userExerciseModel: null,
             weekDay: null,
         ),
+        AppRoutes.userData: (context) => const UserData(),
       },
     );
   }
