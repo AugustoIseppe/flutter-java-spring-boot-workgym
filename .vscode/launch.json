@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "workgym",
+      "cwd": "mobile\\workgym",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "workgym (profile mode)",
+      "cwd": "mobile\\workgym",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "workgym (release mode)",
+      "cwd": "mobile\\workgym",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ],
+}
