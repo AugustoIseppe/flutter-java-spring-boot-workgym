@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Text(
-                  user?.login?.substring(0, 1).toUpperCase() ?? '',
+                  user?.login.substring(0, 1).toUpperCase() ?? '',
                   style: const TextStyle(fontSize: 40.0, color: Colors.black),
                 ),
               ),
