@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:workgym/app/controllers/login_controller.dart';
 import 'package:workgym/app/models/user_exercise_model.dart';
@@ -33,40 +34,110 @@ class _WeekDayTrainingDetailState extends State<WeekDayTrainingDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('')),
-      body: FutureBuilder(
-        future: _weekDaysTrainingDetailsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('Erro ao carregar os treinos'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Nenhum treino encontrado'));
-          } else {
-            final exercises = snapshot.data!;
-            return ListView.builder(
-              itemCount: exercises.length,
-              itemBuilder: (context, index) {
-                final exercise = exercises[index];
-                return Card(
-                  margin: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    title: Text(exercise.name),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Séries: ${exercise.series}'),
-                        Text('Repetições: ${exercise.repetitions}'),
-                        Text('Observação: ${exercise.observation}'),
-                      ],
+      appBar: AppBar(
+        backgroundColor: Color(0xFF0f2d57),
+        elevation: 10,
+        shadowColor: Colors.black,
+        titleSpacing: 2,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          widget.weekDay!,
+          style: GoogleFonts.merriweather(
+            textStyle: TextStyle(
+              color: Colors.white,
+              letterSpacing: .5,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg-home-page.png'),
+            fit: BoxFit.fill,
+            opacity: 1,
+            onError: (exception, stackTrace) {
+              // Lidar com o erro de carregamento da imagem aqui, se necessário
+              print('Erro ao carregar a imagem: $exception');
+            },
+          ),
+        ),
+        child: FutureBuilder(
+          future: _weekDaysTrainingDetailsFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Center(child: Text('Erro ao carregar os treinos'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('Nenhum treino encontrado'));
+            } else {
+              final exercises = snapshot.data!;
+              return ListView.builder(
+                itemCount: exercises.length,
+                itemBuilder: (context, index) {
+                  final exercise = exercises[index];
+                  return InkWell(
+                    onTap: () {
+                      // Navegar para a página de detalhes do exercício
+                      
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      width: double.infinity,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.white, width: 1),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(100),
+                            blurRadius: 10,
+                            offset: const Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Text(
+                              (index + 1).toString(),
+                              style: GoogleFonts.merriweather(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF0f2d57),
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            exercise.name,
+                            style: GoogleFonts.merriweather(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          }
-        },
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }
