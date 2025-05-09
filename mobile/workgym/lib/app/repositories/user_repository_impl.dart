@@ -116,7 +116,6 @@ class UserRepositoryImpl implements UserRepository {
       if (response.statusCode == 200) {
         final List<dynamic> decodedBody = jsonDecode(response.body);
         final List<String> weekDays = decodedBody.cast<String>().toList();
-        print("Dias da semana (API): $weekDays"); // Log para debug
         return weekDays;
       } else {
         throw Exception('Erro ao carregar: ${response.statusCode}');
