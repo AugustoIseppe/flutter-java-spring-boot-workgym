@@ -7,19 +7,19 @@ export default async function Pagina404() {
       <h1 className="text-3xl text-zinc-400 font-bold">
         404 - Página não encontrada!
       </h1>
-      <Image
+      {/* <Image
         src="assets/images/explorador.webp"
         alt="Erro 404"
         width={300}
         height={300}
-      />
+      /> */}
 
       <p className="text-lg max-w-[600px]">
         Você parece ter perdido o caminho... Mas não se preocupe, até os
         melhores exploradores se perdem às vezes! 🧭
       </p>
 
-      <Link href="/" className="bg-blue-500 py-2 px-4 rounded-md">
+      <Link href="/dashboard" className="bg-blue-500 py-2 px-4 rounded-md">
         Voltar
       </Link>
     </div>
