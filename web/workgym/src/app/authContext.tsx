@@ -95,34 +95,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // const login = async (loginVal: string, passwordVal: string) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const receivedToken = await loginService(loginVal, passwordVal);
-  //     if (receivedToken) {
-  //       storeTokenInLocalStorage(receivedToken);
-  //       Cookies.set('jwtToken', receivedToken); // <-- define o token em um cookie acessível pelo middleware
-  //       setToken(receivedToken);
-  //       const currentUser = await getCurrentUserService();
-  //       setUser(currentUser);
-  //       console.log("Usuário atual:", currentUser?.role);
-  //       await router.push('/dashboard');
-  //       // window.location.reload(); // força o estado atualizar
-  //     } else {
-  //       throw new Error("Token não recebido do serviço de login.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Falha no login (AuthContext):", error);
-  //     setUser(null);
-  //     setToken(null);
-  //     removeTokenFromLocalStorage();
-  //     Cookies.remove('jwtToken'); // Remove o cookie se falhar
-  //     throw error;
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
+  
   const logout = () => {
     setIsLoading(true);
     removeTokenFromLocalStorage();
