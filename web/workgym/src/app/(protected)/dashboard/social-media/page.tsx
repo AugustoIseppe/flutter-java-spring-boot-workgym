@@ -1,14 +1,223 @@
+"use client";
+
+import { useState, useEffect, useContext } from "react";
 import Pagina from "@/components/template/Pagina";
+import AuthContext from "@/app/authContext";
 
 export default function SocialMediaPage() {
+  const auth = useContext(AuthContext);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    link: "",
+  });
+
+  const [socialMediaResponse, setSocialMediaResponse] = useState<any[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Buscar redes sociais ao carregar
+  useEffect(() => {
+    const fetchSocialMedia = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/social-media", {
+          headers: {
+            Authorization: `Bearer ${auth?.token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error("Erro ao buscar redes sociais");
+
+        const data = await res.json();
+        setSocialMediaResponse(data);
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao buscar redes sociais.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSocialMedia();
+  }, [auth?.token]);
+
+  // Submeter formulário (cadastrar ou atualizar)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const method = editingId ? "PUT" : "POST";
+    const url = editingId
+      ? `http://localhost:8080/social-media/${editingId}`
+      : "http://localhost:8080/social-media";
+
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth?.token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error("Erro ao salvar");
+
+      const updatedSocialMedia = await response.json();
+
+      if (editingId) {
+        // Atualiza item editado
+        setSocialMediaResponse((prev) =>
+          prev.map((item) =>
+            item.id === updatedSocialMedia.id ? updatedSocialMedia : item
+          )
+        );
+        alert("Rede social atualizada!");
+      } else {
+        // Adiciona novo item
+        setSocialMediaResponse((prev) => [...prev, updatedSocialMedia]);
+        alert("Rede social cadastrada!");
+      }
+
+      setFormData({ name: "", link: "" });
+      setEditingId(null);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao salvar.");
+    }
+  };
+
+  // Excluir
+  const handleDelete = async (id: string) => {
+    if (!confirm("Tem certeza que deseja excluir?")) return;
+
+    try {
+      const res = await fetch(`http://localhost:8080/social-media/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${auth?.token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Erro ao excluir");
+
+      setSocialMediaResponse((prev) => prev.filter((item) => item.id !== id));
+      alert("Rede social excluída!");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao excluir.");
+    }
+  };
+
+  // Editar
+  const handleEdit = (item: any) => {
+    setFormData({
+      name: item.name,
+      link: item.link,
+    });
+    setEditingId(item.id);
+  };
+
+  // Atualizar form
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <Pagina>
-      <div className="flex flex-col gap-4 p-6">
-        <h1 className="text-2xl font-bold text-zinc-950">Redes Sociais</h1>
-        <p className="text-zinc-700">
-          Aqui você pode gerenciar as redes sociais da academia.
-        </p>
-        {/* Aqui você pode adicionar o componente de tabela de redes sociais */}
+      <div className="max-w-5xl mx-auto p-4 flex flex-col gap-6 font-sans">
+       
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Nome"
+            className="border p-2 rounded text-black"
+          />
+          <input
+            name="link"
+            value={formData.link}
+            onChange={handleChange}
+            placeholder="Link"
+            className="border p-2 rounded text-black"
+          />
+
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              {editingId ? "Atualizar" : "Cadastrar"}
+            </button>
+            {editingId && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingId(null);
+                  setFormData({ name: "", link: "" });
+                }}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Cancelar
+              </button>
+            )}
+          </div>
+        </form>
+
+        <div className="w-full h-0.5 bg-gray-300 my-1"  />
+             <div className="flex items-center justify-between bg-gray-100 p-2 rounded-4xl w-fit">
+          <p className="text-sm text-zinc-800 font-bold">
+            {socialMediaResponse.length > 0
+              ? `Total de redes sociais: ${socialMediaResponse.length}`
+              : "Nenhuma rede social cadastrada."}
+          </p>
+        </div>
+
+        {loading ? (
+          <p>Carregando Redes Sociais...</p>
+        ) : socialMediaResponse.length === 0 ? (
+          <p>Nenhuma rede social cadastrada.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white rounded shadow text-sm text-black">
+              <thead className="bg-gray-300">
+                <tr>
+                  <th className="px-4 py-2">Nome</th>
+                  <th className="px-4 py-2">Link</th>
+                  <th className="px-4 py-2">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {socialMediaResponse.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    className={index % 2 === 0 ? "bg-gray-100" : ""}
+                  >
+                    <td className="px-4 py-2">{item.name}</td>
+                    <td className="px-4 py-2">{item.link}</td>
+                    <td className="px-4 py-2 flex gap-2">
+                      <button
+                        onClick={() => handleEdit(item)}
+                        className="bg-blue-200 px-2 py-1 rounded hover:bg-blue-300 text-xs font-bold"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className="bg-red-200 px-2 py-1 rounded hover:bg-red-300 text-xs font-bold"
+                      >
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </Pagina>
   );
