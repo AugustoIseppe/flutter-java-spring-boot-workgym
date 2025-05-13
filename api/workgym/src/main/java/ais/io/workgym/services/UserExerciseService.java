@@ -1,10 +1,12 @@
 package ais.io.workgym.services;
 
+import ais.io.workgym.dto.userExercise.UserExerciseListRequestDTO;
 import ais.io.workgym.dto.userExercise.UserExerciseRequestDTO;
 import ais.io.workgym.dto.userExercise.UserExerciseResponseDTO;
 import ais.io.workgym.entities.Exercise;
 import ais.io.workgym.entities.User;
 import ais.io.workgym.entities.UserExercise;
+import ais.io.workgym.projections.UserExerciseProjection;
 import ais.io.workgym.projections.UserExerciseProjectionDTO;
 import ais.io.workgym.repositories.ExerciseRepository;
 import ais.io.workgym.repositories.UserExerciseRepository;
@@ -96,6 +98,30 @@ public class UserExerciseService {
                 .toList();
     }
 
+    @Transactional
+    public List<UserExerciseResponseDTO> insertBatch(UserExerciseListRequestDTO dto) {
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        return dto.getExercises().stream()
+                .map(item -> {
+                    UserExercise entity = new UserExercise();
+                    Exercise exercise = exerciseRepository.findById(item.getExerciseId())
+                            .orElseThrow(() -> new ResourceNotFoundException("Exercício não encontrado: " + item.getExerciseId()));
+
+                    entity.setUser(user);
+                    entity.setExercise(exercise);
+                    entity.setWeekDay(item.getWeekDay());
+                    entity.setSeries(item.getSeries());
+                    entity.setRepetitions(item.getRepetitions());
+                    entity.setObservation(item.getObservation());
+
+                    entity = userExerciseRepository.save(entity);
+                    return new UserExerciseResponseDTO(entity);
+                })
+                .toList();
+    }
+
     private void copyDtoToEntity(UserExerciseRequestDTO dto, UserExercise entity) {
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
@@ -114,6 +140,9 @@ public class UserExerciseService {
         return userExerciseRepository.findDistinctWeekDaysByUserIdOrdered(userId);
     }
 
+    public List<UserExerciseProjection> getUserExercises(UUID userId) {
+        return userExerciseRepository.findUserExercisesByUserId(userId);
+    }
 
 }
 

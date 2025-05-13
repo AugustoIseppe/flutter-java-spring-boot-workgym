@@ -9,6 +9,7 @@ import ais.io.workgym.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,6 +69,18 @@ public class UserService  {
             throw new DatabaseException("Erro de integridade referencial");
         }
     }
+
+    @Transactional
+    public void changePassword(UUID userId, String newPassword) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(newPassword);
+        user.setPassword(encryptedPassword);
+
+        userRepository.save(user);
+    }
+
 
     private void copyDtoToEntity(UserRequestDTO userRequestDTO, User userEntity) {
         userEntity.setName(userRequestDTO.getName());
