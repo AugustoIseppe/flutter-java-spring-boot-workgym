@@ -1,7 +1,9 @@
 package ais.io.workgym.controllers;
 
+import ais.io.workgym.dto.userExercise.UserExerciseListRequestDTO;
 import ais.io.workgym.dto.userExercise.UserExerciseRequestDTO;
 import ais.io.workgym.dto.userExercise.UserExerciseResponseDTO;
+import ais.io.workgym.projections.UserExerciseProjection;
 import ais.io.workgym.projections.UserExerciseProjectionDTO;
 import ais.io.workgym.services.UserExerciseService;
 import jakarta.validation.Valid;
@@ -61,6 +63,19 @@ public class UserExerciseController {
     public ResponseEntity<List<String>> getWeekDaysByUser(@PathVariable UUID userId) {
         List<String> orderedWeekDays = userExerciseService.getOrderedWeekDaysByUser(userId);
         return ResponseEntity.ok(orderedWeekDays);
+    }
+
+    @PostMapping("/batch")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<List<UserExerciseResponseDTO>> insertBatch(@RequestBody @Valid UserExerciseListRequestDTO dto) {
+        List<UserExerciseResponseDTO> responses = userExerciseService.insertBatch(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responses);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<UserExerciseProjection>> getUserExercises(@PathVariable UUID userId) {
+        List<UserExerciseProjection> exercises = userExerciseService.getUserExercises(userId);
+        return ResponseEntity.ok(exercises);
     }
 
 }
