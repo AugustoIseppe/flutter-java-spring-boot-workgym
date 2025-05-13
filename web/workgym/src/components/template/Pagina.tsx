@@ -8,7 +8,7 @@ export default function Pagina(props: any) {
       <Cabecalho />
       <div className="flex-1 flex bg-white text-white">
         <Menu />
-        <main className="flex-1 p-8">{props.children}</main>
+        <main className="flex-1">{props.children}</main>
       </div>
       <Rodape />
     </div>
