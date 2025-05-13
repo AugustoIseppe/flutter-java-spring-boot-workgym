@@ -132,10 +132,13 @@ export default function Page() {
   return (
     <Pagina>
       <div className="max-w-5xl mx-auto p-4 flex flex-col gap-6 font-sans">
-        <h1 className="text-2xl font-bold">
-          {editingId ? "Editar Exercício" : "Cadastrar Exercício"}
-        </h1>
-
+        <div className="flex items-center justify-between bg-gray-100 p-2 rounded-4xl w-fit">
+          <p className="text-sm text-zinc-800 font-bold">
+            {exercises.length > 0
+              ? `Total de exercícios cadastrados: ${exercises.length}`
+              : "Nenhum exercício cadastrado."}
+          </p>
+        </div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             name="name"
@@ -200,12 +203,12 @@ export default function Page() {
             )}
           </div>
         </form>
-
-            <div className="flex items-center justify-center w-full h-0.5 bg-gray-300 my-2">
-              ______________________________________________________
-            </div>
-        <h2 className="text-xl font-bold text-zinc-950">Exercícios cadastrados</h2>
-
+        <div className="flex items-center justify-center w-full h-0.5 bg-gray-300 my-2">
+          ______________________________________________________
+        </div>
+        <h2 className="text-xl font-bold text-zinc-950">
+          Exercícios cadastrados
+        </h2>
         {loading ? (
           <p>Carregando exercícios...</p>
         ) : exercises.length === 0 ? (
@@ -224,7 +227,10 @@ export default function Page() {
               </thead>
               <tbody>
                 {exercises.map((ex, index) => (
-                  <tr key={ex.id} className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                  <tr
+                    key={ex.id}
+                    className={index % 2 === 0 ? "bg-gray-100" : ""}
+                  >
                     <td className="px-4 py-2">{ex.name}</td>
                     <td className="px-4 py-2">{ex.description}</td>
                     <td className="px-4 py-2">{ex.muscleGroup}</td>
@@ -232,13 +238,13 @@ export default function Page() {
                     <td className="px-4 py-2 flex gap-2">
                       <button
                         onClick={() => handleEdit(ex)}
-                        className="text-zinc-950 bg-blue-400 px-2 py-1 rounded hover:bg-blue-200 text-xs"
+                        className="text-zinc-950 bg-blue-200 px-2 py-1 rounded hover:bg-blue-200 text-xs font-bold"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => handleDelete(ex.id)}
-                        className="bg-red-300 text-zinc-900 px-2 py-1 rounded hover:bg-red-700 text-xs"
+                        className="bg-red-200 text-zinc-900 px-2 py-1 rounded hover:bg-red-700 text-xs font-bold"
                       >
                         Excluir
                       </button>

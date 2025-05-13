@@ -20,7 +20,7 @@ export default function Cabecalho() {
   };
 
   return (
-    <header className="flex justify-between items-center bg-white border-b px-6 py-3 gap-2 ">
+    <header className="flex justify-between items-center bg-gradient-to-r from-zinc-100 via-white to-zinc-100 border-b px-6 py-3 gap-2 ">
       <div className="flex items-center justify-center w-12 h-12 bg-black rounded-full">
         <Image src={"/workgym-logo.png"} alt="Logo" width={40} height={40} />
       </div>
@@ -29,7 +29,7 @@ export default function Cabecalho() {
       </span>
 
       <div className="flex items-center gap-2">
-        <span className="text-zinc-950 text-sm">
+        <span className="text-zinc-950 text-sm font-extrabold">
           {auth?.user?.login} - {auth?.user?.role} 
         </span>
       <form onSubmit={handleSubmit}>
