@@ -2,6 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "WorkgymApplication",
+      "request": "launch",
+      "mainClass": "ais.io.workgym.WorkgymApplication",
+      "projectName": "workgym"
+    },
+    {
       "name": "workgym",
       "cwd": "mobile\\workgym",
       "request": "launch",
