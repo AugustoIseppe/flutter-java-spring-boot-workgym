@@ -1,8 +1,8 @@
-# 🏋️ WorkGym - Onde esforço vira resultado! 💪
+# 🏋️ WorkGym! 💪
 
 ## 📜 Descrição
 
-O WorkGym é um projeto de estudo que simula uma API RESTful e aplicações frontend (mobile e web) para um sistema de academia. Desenvolvido com foco no aprendizado e aplicação de tecnologias modernas, o projeto abrange desde o backend robusto com Java e Spring Boot, passando por um aplicativo mobile intuitivo com Flutter, até uma interface web dinâmica com Next.js. A ideia central é demonstrar a integração dessas tecnologias para criar uma solução completa, mesmo que em um escopo de estudo, onde "esforço vira resultado!".
+O WorkGym é um projeto de estudo que simula uma API RESTful e aplicações frontend (mobile e web) para um sistema de academia. Desenvolvido com foco no aprendizado e aplicação de tecnologias modernas, o projeto abrange desde o backend robusto com Java e Spring Boot, passando por um aplicativo mobile intuitivo com Flutter, até uma interface web dinâmica com Next.js (dashboard para controle de alunos e treinos). A ideia central é demonstrar a integração dessas tecnologias para criar uma solução completa, mesmo que em um escopo de estudo!
 
 
 ## 🚀 Tecnologias Utilizadas
@@ -201,22 +201,7 @@ npm run lint
 # npm run test (se houver script de teste configurado)
 ```
 
-## 🤝 Contribuição
-
-Como este é um projeto de estudo, contribuições podem não ser o foco principal. No entanto, se desejar sugerir melhorias ou correções, sinta-se à vontade para abrir uma issue ou um pull request no repositório do projeto (se disponível publicamente).
-
-Caso queira seguir um fluxo formal de contribuição:
-1.  🚀 Faça um fork do projeto
-2.  🌿 Crie uma branch (`git checkout -b feature/sua-feature`)
-3.  💾 Commit suas alterações (`git commit -m 'Adiciona sua nova feature'`)
-4.  📤 Envie para o repositório remoto (`git push origin feature/sua-feature`)
-5.  🛎️ Abra um Pull Request
-
-## 📜 Licença
-
-Este projeto é distribuído sob a licença MIT. Consulte o arquivo `LICENSE` (se houver no projeto) para mais informações.
-
 ## 👤 Autor
 
-Desenvolvido como um projeto de estudo. 🚀
+Desenvolvido como um projeto de estudo. Augusto Iseppe Balan 🚀
 
