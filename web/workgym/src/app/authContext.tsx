@@ -76,9 +76,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         Cookies.set("jwtToken", receivedToken); // <-- define o token em um cookie acessível pelo middleware
         setToken(receivedToken);
         const currentUser = await getCurrentUserService();
+
+        if(currentUser?.role === "ADMIN") {
+          router.push("/dashboard");
+        } else {
+          setError("Acesso negado! Você não tem permissão para acessar esta área.");
+        }
+
         console.log("Usuário atual:", currentUser);
         setUser(currentUser);
-        await router.push("/dashboard");
         // window.location.reload(); // força o estado atualizar
       } else {
         throw new Error("Token não recebido do serviço de login.");
