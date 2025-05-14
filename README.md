@@ -203,5 +203,5 @@ npm run lint
 
 ## 👤 Autor
 
-Desenvolvido como um projeto de estudo. Augusto Iseppe Balan 🚀
+Desenvolvido como um projeto de estudo. Augusto Iseppe 🚀
 
