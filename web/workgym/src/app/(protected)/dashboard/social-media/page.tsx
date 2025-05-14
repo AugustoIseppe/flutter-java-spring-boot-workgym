@@ -176,7 +176,9 @@ export default function SocialMediaPage() {
   return (
     <Pagina>
       <div className="max-w-5xl mx-auto p-4 flex flex-col gap-6 font-sans">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <h1 className="text-2xl font-bold text-zinc-900">Redes Sociais</h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded shadow-lg bg-white">
+         <h2 className="text-xl font-semibold text-zinc-900">{editingId ? "Editar Rede Social" : "Adicionar Rede Social"}</h2>
           <input
             name="name"
             value={formData.name}

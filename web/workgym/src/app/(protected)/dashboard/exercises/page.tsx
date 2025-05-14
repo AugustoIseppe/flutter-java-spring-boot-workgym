@@ -179,14 +179,13 @@ export default function Page() {
   return (
     <Pagina>
       <div className="max-w-5xl mx-auto p-4 flex flex-col gap-6 font-sans">
-        <div className="flex items-center justify-between bg-gray-100 p-2 rounded-4xl w-fit">
-          <p className="text-sm text-zinc-800 font-bold">
-            {exercises.length > 0
-              ? `Total de exercícios cadastrados: ${exercises.length}`
-              : "Nenhum exercício cadastrado."}
-          </p>
-        </div>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <h1 className="text-2xl font-bold text-zinc-950">
+          Cadastro de Exercícios
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded shadow-2xl bg-white">
+          <h2 className="text-xl font-semibold text-zinc-950">
+            {editingId ? "Editar Exercício" : "Adicionar Exercício"}
+          </h2>
           <input
             name="name"
             value={formData.name}

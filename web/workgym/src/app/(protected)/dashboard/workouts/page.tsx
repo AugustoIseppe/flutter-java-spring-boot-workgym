@@ -3,6 +3,7 @@
 import { useState, useEffect, useContext } from "react";
 import Pagina from "@/components/template/Pagina";
 import AuthContext from "@/app/authContext";
+import { toast } from "sonner";
 
 interface Exercise {
   id: string;
@@ -36,7 +37,7 @@ interface ApiUserExerciseItem {
   weekDay: string;
   series: number;
   muscleGroup: string; // Mantido, embora não na interface Exercise
-  equipment: string;   // Mantido, embora não na interface Exercise
+  equipment: string; // Mantido, embora não na interface Exercise
   observation: string;
   repetitions: number;
 }
@@ -46,7 +47,7 @@ export default function WorkoutsPage() {
   const [exercises, setExercises] = useState<Exercise[]>([]); // Lista de todos os exercícios disponíveis
   const [users, setUsers] = useState<any[]>([]);
   // userExercises (todos os treinos de todos os usuários) não parece ser usado para exibir os treinos de um usuário selecionado.
-  // const [userExercises, setUserExercises] = useState<UserExercise[]>([]); 
+  // const [userExercises, setUserExercises] = useState<UserExercise[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null); // ID do UserExercise que está sendo editado
   const [selectedUserExercises, setSelectedUserExercises] = useState<
@@ -84,38 +85,42 @@ export default function WorkoutsPage() {
 
         if (!response.ok) {
           const errorData = await response.text();
-          console.error("Erro ao buscar treinos do usuário - Status:", response.status, "Detalhes:", errorData);
-          throw new Error(`Erro ao buscar treinos do usuário: ${response.statusText}`);
+          console.error(
+            "Erro ao buscar treinos do usuário - Status:",
+            response.status,
+            "Detalhes:",
+            errorData
+          );
+          throw new Error(
+            `Erro ao buscar treinos do usuário: ${response.statusText}`
+          );
         }
 
         const dataFromApi: ApiUserExerciseItem[] = await response.json();
 
-        // Transformar os dados da API para a estrutura UserExercise esperada pelo componente
         const transformedUserExercises = dataFromApi.map((apiItem, index) => {
-          // Tenta encontrar o exercício correspondente na lista de exercícios carregada
-          // para obter o ID do exercício e garantir que os dados estejam completos.
-          const relatedExercise = exercises.find(ex => 
-            // A correspondência pode ser por nome, mas idealmente a API /user-exercises/{userId}
-            // retornaria o exerciseId diretamente.
-            // Se 'apiItem.exerciseId' for retornado pela API, use-o para encontrar 'relatedExercise'.
-            // Se não, use o nome como fallback (pode não ser único).
-            apiItem.exerciseId ? ex.id === apiItem.exerciseId : ex.name === apiItem.name
+          const relatedExercise = exercises.find((ex) =>
+            apiItem.exerciseId
+              ? ex.id === apiItem.exerciseId
+              : ex.name === apiItem.name
           );
 
-          const currentUser = users.find(u => u.id === formData.userId);
+          const currentUser = users.find((u) => u.id === formData.userId);
 
           return {
-            // Se a API /user-exercises/{userId} retorna um ID para o registro UserExercise (ex: id da tabela de junção),
-            // use-o aqui. Caso contrário, um ID terá que ser gerado ou a lógica de edição/exclusão ajustada.
-            // O exemplo de JSON não mostrava um 'id' para o UserExercise em si.
-            id: apiItem.id || `user-exercise-${formData.userId}-${relatedExercise?.id || apiItem.name}-${index}`, 
+            id:
+              apiItem.id ||
+              `user-exercise-${formData.userId}-${
+                relatedExercise?.id || apiItem.name
+              }-${index}`,
             userId: formData.userId,
             exerciseId: relatedExercise?.id || "", // ID do exercício da lista 'exercises'
             weekDay: apiItem.weekDay,
             series: apiItem.series,
             repetitions: apiItem.repetitions,
             observation: apiItem.observation,
-            exercise: { // Objeto aninhado 'exercise' conforme a interface Exercise
+            exercise: {
+              // Objeto aninhado 'exercise' conforme a interface Exercise
               id: relatedExercise?.id || "", // ID do exercício
               name: relatedExercise?.name || apiItem.name, // Prioriza dados de 'relatedExercise' se encontrado
               description: relatedExercise?.description || apiItem.description,
@@ -129,11 +134,13 @@ export default function WorkoutsPage() {
         });
 
         setSelectedUserExercises(transformedUserExercises);
-
       } catch (err) {
-        console.error("Falha ao buscar ou transformar treinos do usuário:", err);
+        console.error(
+          "Falha ao buscar ou transformar treinos do usuário:",
+          err
+        );
         // Evitar alert() em produção para melhor UX, preferir notificações no UI
-        // alert("Erro ao buscar treinos do usuário."); 
+        // alert("Erro ao buscar treinos do usuário.");
       }
     };
 
@@ -162,17 +169,8 @@ export default function WorkoutsPage() {
         if (!exercisesRes.ok) throw new Error("Erro ao buscar exercícios");
         const exercisesData = await exercisesRes.json();
         setExercises(exercisesData);
-
-        // A busca inicial de userExercises para todos os usuários foi removida,
-        // pois selectedUserExercises é preenchido pelo outro useEffect quando um usuário é selecionado.
-        // Se você precisar de todos os userExercises por algum outro motivo, pode adicionar de volta.
-        // const userExercisesRes = await fetch("http://localhost:8080/user-exercises", ...);
-        // const userExercisesData = await userExercisesRes.json();
-        // setUserExercises(userExercisesData); 
-
       } catch (err) {
         console.error("Erro ao carregar dados iniciais:", err);
-        // alert("Erro ao carregar dados.");
       } finally {
         setLoading(false);
       }
@@ -183,29 +181,45 @@ export default function WorkoutsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!auth?.token) {
-      alert("Autenticação necessária.");
+      toast.error("Erro de autenticação. Por favor, faça login novamente.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
       return;
     }
     if (!formData.exerciseId) {
-        alert("Por favor, selecione um exercício válido.");
-        return;
+      toast.error(
+        "Selecione um exercício antes de cadastrar/atualizar o treino.",
+        {
+          duration: 3000,
+          style: {
+            background: "#ffb0ab",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        }
+      );
+      return;
     }
 
     const method = editingId ? "PUT" : "POST";
-    // Para POST, a URL é /user-exercises. Para PUT, é /user-exercises/{id_do_user_exercise}
     const url = editingId
-      ? `http://localhost:8080/user-exercises/${editingId}` 
+      ? `http://localhost:8080/user-exercises/${editingId}`
       : "http://localhost:8080/user-exercises";
 
-    // O corpo da requisição para POST /user-exercises deve corresponder ao que o backend espera.
-    // Geralmente, para criar um UserExercise, você enviaria userId, exerciseId, weekDay, series, etc.
     const payload = {
-        userId: formData.userId,
-        exerciseId: formData.exerciseId, // ID do exercício selecionado
-        weekDay: formData.weekDay,
-        series: formData.series,
-        repetitions: formData.repetitions,
-        observation: formData.observation,
+      userId: formData.userId,
+      exerciseId: formData.exerciseId, // ID do exercício selecionado
+      weekDay: formData.weekDay,
+      series: formData.series,
+      repetitions: formData.repetitions,
+      observation: formData.observation,
     };
 
     try {
@@ -222,38 +236,20 @@ export default function WorkoutsPage() {
         const errorText = await response.text();
         throw new Error(errorText || "Erro ao cadastrar/atualizar treino");
       }
-
-      // Após um POST/PUT bem-sucedido, o ideal é que o backend retorne o objeto criado/atualizado.
-      // Se retornar, use-o para atualizar o estado. Senão, refaça o fetchUserExercises.
-      // Por simplicidade, vamos refazer o fetch para garantir dados atualizados.
-      // const updatedExerciseData = await response.json(); // Se o backend retornar o objeto
-      
-      alert(editingId ? "Treino atualizado!" : "Treino cadastrado!");
-      
-      // Refazer o fetch para atualizar a lista selectedUserExercises
-      // Isso requer que o useEffect de fetchUserExercises seja acionado.
-      // Uma forma é resetar formData.userId e depois setá-lo novamente, mas é deselegante.
-      // Melhor é ter uma função para buscar que possa ser chamada aqui.
-      // Ou, se o backend retornar o item atualizado/criado, atualizar o estado diretamente.
-
-      // Solução simples: forçar um re-fetch se não houver retorno do objeto atualizado
-      // Se o backend retornar o objeto UserExercise completo e atualizado:
-      // const returnedUserExercise = await response.json();
-      // // Você precisaria transformar este returnedUserExercise também, se ele não vier na estrutura aninhada.
-      // // E então atualizar o selectedUserExercises.
-
-      // Por agora, vamos apenas limpar o formulário e o usuário terá que selecionar novamente para ver a atualização,
-      // ou você pode implementar um re-fetch mais robusto.
-      // Para um re-fetch simples, você pode chamar a função fetchUserExercises diretamente se ela for definida fora do useEffect
-      // ou adicionar um estado para forçar o re-fetch.
-
-      // Exemplo de atualização direta se o backend retornar o UserExercise completo (já transformado ou a transformar):
-      // const newOrUpdatedItem = await response.json(); // Supondo que já está na estrutura correta ou transformar aqui
-      // if (editingId) {
-      //   setSelectedUserExercises(prev => prev.map(item => item.id === editingId ? newOrUpdatedItem : item));
-      // } else {
-      //   setSelectedUserExercises(prev => [...prev, newOrUpdatedItem]);
-      // }
+      toast.success(
+        editingId
+          ? "Treino atualizado com sucesso!"
+          : "Treino cadastrado com sucesso!",
+        {
+          duration: 3000,
+          style: {
+            background: "#9ed7a0",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        }
+      );
 
       // Resetar formulário
       setFormData({
@@ -266,24 +262,40 @@ export default function WorkoutsPage() {
       });
       setEditingId(null);
 
-      // Para forçar a atualização da lista após cadastro/edição, é melhor refazer a busca.
-      // Temporariamente, vamos simular um re-fetch alterando uma dependência do useEffect de busca.
-      // Isso é um hack. O ideal é que o backend retorne o dado atualizado ou ter uma função de fetch separada.
       if (formData.userId && auth?.token && exercises.length > 0) {
         const tempUserId = formData.userId;
-        setFormData(prev => ({...prev, userId: ''})); // Limpa para forçar o useEffect
-        setTimeout(() => setFormData(prev => ({...prev, userId: tempUserId, exerciseId: '', weekDay: 'SEGUNDA', series: 3, repetitions: 12, observation: ''})), 0); // Restaura
+        setFormData((prev) => ({ ...prev, userId: "" })); // Limpa para forçar o useEffect
+        setTimeout(
+          () =>
+            setFormData((prev) => ({
+              ...prev,
+              userId: tempUserId,
+              exerciseId: "",
+              weekDay: "SEGUNDA",
+              series: 3,
+              repetitions: 12,
+              observation: "",
+            })),
+          0
+        ); // Restaura
       }
-
-
     } catch (err: any) {
       console.error(err);
-      alert(err.message || "Erro ao cadastrar/atualizar treino.");
+      toast.error(err.message || "Erro ao cadastrar/atualizar treino.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Tem certeza que deseja excluir este treino?") || !auth?.token) return;
+    if (!confirm("Tem certeza que deseja excluir este treino?") || !auth?.token)
+      return;
 
     try {
       const response = await fetch(
@@ -299,10 +311,27 @@ export default function WorkoutsPage() {
       if (!response.ok) throw new Error("Erro ao excluir treino");
 
       setSelectedUserExercises((prev) => prev.filter((item) => item.id !== id));
-      alert("Treino excluído!");
+      toast.success("Treino excluído com sucesso!", {
+        duration: 3000,
+        style: {
+          background: "#9ed7a0",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     } catch (err) {
       console.error(err);
-      alert("Erro ao excluir treino.");
+
+      toast.error("Erro ao excluir treino.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
@@ -325,21 +354,38 @@ export default function WorkoutsPage() {
     setFormData((prev) => ({
       ...prev,
       [name]:
-        name === "series" || name === "repetitions" ? parseInt(value) || 0 : value,
+        name === "series" || name === "repetitions"
+          ? parseInt(value) || 0
+          : value,
     }));
   };
 
-  if (loading) return <Pagina><p>Carregando...</p></Pagina>; 
+  if (loading)
+    return (
+      <Pagina>
+        <p>Carregando...</p>
+      </Pagina>
+    );
 
   return (
     <Pagina>
-      <div className="max-w-5xl mx-auto p-4 flex flex-col gap-2 font-sans">
-        <h1 className="text-2xl font-bold">Treinos do Usuário</h1>
+      <div className="max-w-5xl mx-auto p-2 flex flex-col gap-2 font-sans">
+        <h1 className="text-2xl font-bold text-zinc-900">Treinos do Usuário</h1>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded shadow-md">
-          <h2 className="text-xl font-semibold">{editingId ? "Editar Treino" : "Adicionar Treino"}</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 p-4 border rounded shadow-2xl bg-white"
+        >
+          <h2 className="text-xl font-semibold text-zinc-900">
+            {editingId ? "Editar Treino" : "Adicionar Treino"}
+          </h2>
           <div>
-            <label htmlFor="userId" className="block text-sm font-medium text-gray-700">Usuário</label>
+            <label
+              htmlFor="userId"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Usuário
+            </label>
             <select
               id="userId"
               name="userId"
@@ -359,7 +405,12 @@ export default function WorkoutsPage() {
           </div>
 
           <div>
-            <label htmlFor="exerciseId" className="block text-sm font-medium text-gray-700">Exercício</label>
+            <label
+              htmlFor="exerciseId"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Exercício
+            </label>
             <select
               id="exerciseId"
               name="exerciseId"
@@ -376,9 +427,14 @@ export default function WorkoutsPage() {
               ))}
             </select>
           </div>
-          
+
           <div>
-            <label htmlFor="weekDay" className="block text-sm font-medium text-gray-700">Dia da Semana</label>
+            <label
+              htmlFor="weekDay"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Dia da Semana
+            </label>
             <select
               id="weekDay"
               name="weekDay"
@@ -399,7 +455,12 @@ export default function WorkoutsPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="series" className="block text-sm font-medium text-gray-700">Séries</label>
+              <label
+                htmlFor="series"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Séries
+              </label>
               <input
                 id="series"
                 type="number"
@@ -413,7 +474,12 @@ export default function WorkoutsPage() {
               />
             </div>
             <div>
-              <label htmlFor="repetitions" className="block text-sm font-medium text-gray-700">Repetições</label>
+              <label
+                htmlFor="repetitions"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Repetições
+              </label>
               <input
                 id="repetitions"
                 type="number"
@@ -429,7 +495,12 @@ export default function WorkoutsPage() {
           </div>
 
           <div>
-            <label htmlFor="observation" className="block text-sm font-medium text-gray-700">Observações</label>
+            <label
+              htmlFor="observation"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Observações
+            </label>
             <input
               id="observation"
               type="text"
@@ -484,18 +555,33 @@ export default function WorkoutsPage() {
             </div>
 
             {selectedUserExercises.length === 0 && !loading ? (
-              <p className="mt-2">Nenhum treino atribuído a este usuário ou dados ainda carregando.</p>
+              <p className="mt-2">
+                Nenhum treino atribuído a este usuário ou dados ainda
+                carregando.
+              </p>
             ) : (
               <div className="overflow-x-auto mt-2">
                 <table className="min-w-full bg-white rounded shadow text-sm text-black">
                   <thead className="bg-gray-200">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Exercício</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dia da Semana</th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Séries</th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Repetições</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Observações</th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Exercício
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Dia da Semana
+                      </th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Séries
+                      </th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Repetições
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Observações
+                      </th>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Ações
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -507,18 +593,33 @@ export default function WorkoutsPage() {
                         <td className="px-4 py-2 whitespace-nowrap">
                           <div className="flex items-center">
                             {userExerciseItem.exercise.image && (
-                                <img src={`/images/${userExerciseItem.exercise.image}`} alt={userExerciseItem.exercise.name} className="w-10 h-10 rounded-full mr-3 object-cover" onError={(e) => e.currentTarget.style.display = 'none'}/>
+                              <img
+                                src={`/images/${userExerciseItem.exercise.image}`}
+                                alt={userExerciseItem.exercise.name}
+                                className="w-10 h-10 rounded-full mr-3 object-cover"
+                                onError={(e) =>
+                                  (e.currentTarget.style.display = "none")
+                                }
+                              />
                             )}
                             <div>
-                                <div className="text-sm font-medium text-gray-900">{userExerciseItem.exercise?.name || "Nome não disponível"}</div>
-                                <div className="text-xs text-gray-500">{userExerciseItem.exercise?.description || "Descrição não disponível"}</div>
+                              <div className="text-sm font-medium text-gray-900">
+                                {userExerciseItem.exercise?.name ||
+                                  "Nome não disponível"}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {userExerciseItem.exercise?.description ||
+                                  "Descrição não disponível"}
+                              </div>
                             </div>
                           </div>
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
                           {userExerciseItem.weekDay}
                         </td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center">{userExerciseItem.series}</td>
+                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center">
+                          {userExerciseItem.series}
+                        </td>
                         <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center">
                           {userExerciseItem.repetitions}
                         </td>
@@ -526,14 +627,14 @@ export default function WorkoutsPage() {
                           {userExerciseItem.observation}
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap text-sm font-medium text-center">
-                          <button 
-                            onClick={() => handleEdit(userExerciseItem)} 
+                          <button
+                            onClick={() => handleEdit(userExerciseItem)}
                             className="text-indigo-600 hover:text-indigo-900 mr-2"
                           >
                             Editar
                           </button>
-                          <button 
-                            onClick={() => handleDelete(userExerciseItem.id)} 
+                          <button
+                            onClick={() => handleDelete(userExerciseItem.id)}
                             className="text-red-600 hover:text-red-900"
                           >
                             Excluir
@@ -551,4 +652,3 @@ export default function WorkoutsPage() {
     </Pagina>
   );
 }
-

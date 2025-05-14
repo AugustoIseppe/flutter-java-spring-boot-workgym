@@ -3,6 +3,7 @@
 import { useState, useEffect, useContext } from "react";
 import Pagina from "@/components/template/Pagina";
 import AuthContext from "@/app/authContext";
+import { toast } from "sonner";
 
 export default function UsersPage() {
   const auth = useContext(AuthContext);
@@ -36,7 +37,15 @@ export default function UsersPage() {
         setUsers(data);
       } catch (err) {
         console.error(err);
-        alert("Erro ao buscar usuários.");
+        toast.error("Erro ao buscar usuários.", {
+          duration: 3000,
+          style: {
+            background: "#ffb0ab",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } finally {
         setLoading(false);
       }
@@ -78,13 +87,37 @@ export default function UsersPage() {
       setUsers((prev) =>
         prev.map((item) => (item.id === updatedUser?.id ? updatedUser : item))
       );
-      alert("Usuário atualizado!");
+      toast.success("Usuário atualizado com sucesso!", {
+        duration: 3000,
+        style: {
+          background: "#9ed7a0",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     } else {
       if (updatedUser) {
         setUsers((prevUsers) => [...prevUsers, updatedUser]);
-        alert("Usuário cadastrado!");
+        toast.success("Usuário cadastrado com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#9ed7a0",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } else {
-        alert("Usuário cadastrado com sucesso! (sem dados de retorno)");
+        toast.success("Usuário cadastrado com sucesso, mas nao foi possivel atualizar a lista", {
+          duration: 3000,
+          style: {
+            background: "#9ed7a0",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       }
     }
 
@@ -101,8 +134,16 @@ export default function UsersPage() {
     setEditingId(null);
   } catch (err: any) {
     console.error(err);
-    alert(err.message || "Erro ao cadastrar/atualizar usuário.");
-  }
+    toast.error(err.message || "Erro ao cadastrar/atualizar usuário.", {
+      duration: 3000,
+      style: {
+        background: "#ffb0ab",
+        color: "#fff",
+        borderRadius: "8px",
+        border: "1px solid #fff",
+      },
+    });
+    }
 };
 
 
@@ -121,10 +162,26 @@ export default function UsersPage() {
       if (!response.ok) throw new Error("Erro ao excluir usuário");
 
       setUsers((prev) => prev.filter((item) => item.id !== id));
-      alert("Usuário excluído!");
+      toast.success("Usuário excluído com sucesso!", {
+        duration: 3000,
+        style: {
+          background: "#9ed7a0",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     } catch (err) {
       console.error(err);
-      alert("Erro ao excluir usuário.");
+      toast.error("Erro ao excluir usuário.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
@@ -167,11 +224,26 @@ export default function UsersPage() {
     const message = await response.text();
 
     if (!response.ok) throw new Error(message);
-
-    alert(message);
+    toast.success(message || "Senha alterada com sucesso!", {
+      duration: 3000,
+      style: {
+        background: "#9ed7a0",
+        color: "#fff",
+        borderRadius: "8px",
+        border: "1px solid #fff",
+      },
+    });
   } catch (err: any) {
     console.error(err);
-    alert(err.message || "Erro ao trocar a senha.");
+    toast.error(err.message || "Erro ao alterar senha.", {
+      duration: 3000,
+      style: {
+        background: "#ffb0ab",
+        color: "#fff",
+        borderRadius: "8px",
+        border: "1px solid #fff",
+      },
+    });
   }
 };
 
@@ -179,9 +251,12 @@ export default function UsersPage() {
   return (
     <Pagina>
       <div className="max-w-5xl mx-auto p-4 flex flex-col gap-2 font-sans">
-        <h1 className="text-2xl font-bold">Usuários</h1>
+        <h1 className="text-2xl font-bold text-zinc-900">Usuários</h1>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 mb-6 border rounded shadow-2xl bg-white">
+          <h2 className="text-xl font-bold text-zinc-900">
+            {editingId ? "Editar Usuário" : "Cadastrar Usuário"}
+          </h2>
           <input
             type="text"
             name="login"
