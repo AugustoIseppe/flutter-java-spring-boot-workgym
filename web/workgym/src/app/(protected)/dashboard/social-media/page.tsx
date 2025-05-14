@@ -177,7 +177,7 @@ export default function SocialMediaPage() {
     <Pagina>
       <div className="max-w-5xl mx-auto p-4 flex flex-col gap-6 font-sans">
         <h1 className="text-2xl font-bold text-zinc-900">Redes Sociais</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded shadow-lg bg-white">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded shadow-sm bg-white">
          <h2 className="text-xl font-semibold text-zinc-900">{editingId ? "Editar Rede Social" : "Adicionar Rede Social"}</h2>
           <input
             name="name"
@@ -230,33 +230,32 @@ export default function SocialMediaPage() {
         ) : socialMediaResponse.length === 0 ? (
           <p>Nenhuma rede social cadastrada.</p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white rounded shadow text-sm text-black">
-              <thead className="bg-gray-300">
-                <tr>
-                  <th className="px-4 py-2">Nome</th>
-                  <th className="px-4 py-2">Link</th>
-                  <th className="px-4 py-2">Ações</th>
+          <div className="overflow-x-auto text-center items-center justify-center rounded-xl shadow-sm">
+            <table className="min-w-full bg-white rounded shadow text-sm text-black text-center">
+              <thead className="bg-gray-200 text-center">
+                <tr className="text-center">
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Link</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-white divide-y divide-gray-200 items-center justify-center text-center">
                 {socialMediaResponse.map((item, index) => (
                   <tr
                     key={item.id}
-                    className={index % 2 === 0 ? "bg-gray-100" : ""}
-                  >
-                    <td className="px-4 py-2">{item.name}</td>
-                    <td className="px-4 py-2">{item.link}</td>
-                    <td className="px-4 py-2 flex gap-2">
+                    className="hover:bg-gray-50 transition-colors duration-200 text-center"                  >
+                    <td className="px-4 py-2 text-sm font-medium text-gray-500 whitespace-nowrap text-center">{item.name}</td>
+                    <td className="px-4 py-2 text-sm font-medium text-gray-500 whitespace-nowrap text-center">{item.link}</td>
+                    <td className="px-4 py-2 text-sm font-medium text-gray-500 flex gap-2 whitespace-nowrap text-center items-center justify-center">
                       <button
                         onClick={() => handleEdit(item)}
-                        className="bg-blue-200 px-2 py-1 rounded hover:bg-blue-300 text-xs font-bold"
+                        className="bg-blue-300 px-2 py-1 rounded hover:bg-blue-300 text-xs font-bold text-zinc-900 items-center justify-center"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => handleDelete(item.id)}
-                        className="bg-red-200 px-2 py-1 rounded hover:bg-red-300 text-xs font-bold"
+                        className="bg-red-200 px-2 py-1 rounded hover:bg-red-300 text-xs font-bold text-zinc-900"
                       >
                         Excluir
                       </button>

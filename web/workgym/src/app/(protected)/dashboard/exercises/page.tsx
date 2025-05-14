@@ -182,7 +182,7 @@ export default function Page() {
         <h1 className="text-2xl font-bold text-zinc-950">
           Cadastro de Exercícios
         </h1>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded shadow-2xl bg-white">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded shadow-sm bg-white">
           <h2 className="text-xl font-semibold text-zinc-950">
             {editingId ? "Editar Exercício" : "Adicionar Exercício"}
           </h2>
@@ -260,28 +260,28 @@ export default function Page() {
         ) : exercises.length === 0 ? (
           <p>Nenhum exercício cadastrado.</p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white  rounded shadow text-sm text-black">
-              <thead className="bg-gray-300">
-                <tr>
-                  <th className="px-4 py-2 ">Nome</th>
-                  <th className="px-4 py-2 ">Descrição</th>
-                  <th className="px-4 py-2 ">Grupo Muscular</th>
-                  <th className="px-4 py-2 ">Equipamento</th>
-                  <th className="px-4 py-2 ">Ações</th>
+          <div className="overflow-x-auto text-center items-center justify-center rounded-xl shadow-sm">
+            <table className="min-w-full bg-white rounded shadow text-sm text-black">
+              <thead className="bg-gray-200 text-center items-center justify-center">
+                <tr className="text-center">
+                  <th className="px-4 py-2 text-center items-center justify-center text-gray-500">Nome</th>
+                  <th className="px-4 py-2 text-center items-center justify-center text-gray-500">Descrição</th>
+                  <th className="px-4 py-2 text-center items-center justify-center text-gray-500">Grupo Muscular</th>
+                  <th className="px-4 py-2 text-center items-center justify-center text-gray-500">Equipamento</th>
+                  <th className="px-4 py-2 text-center items-center justify-center text-gray-500">Ações</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-center items-center justify-center">
                 {exercises.map((ex, index) => (
                   <tr
                     key={ex.id}
                     className={index % 2 === 0 ? "bg-gray-100" : ""}
                   >
-                    <td className="px-4 py-2">{ex.name}</td>
-                    <td className="px-4 py-2">{ex.description}</td>
-                    <td className="px-4 py-2">{ex.muscleGroup}</td>
-                    <td className="px-4 py-2">{ex.equipment}</td>
-                    <td className="px-4 py-2 flex gap-2">
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500">{ex.name}</td>
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500">{ex.description}</td>
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500">{ex.muscleGroup}</td>
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500">{ex.equipment}</td>
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500 flex gap-2">
                       <button
                         onClick={() => handleEdit(ex)}
                         className="text-zinc-950 bg-blue-200 px-2 py-1 rounded hover:bg-blue-200 text-xs font-bold"

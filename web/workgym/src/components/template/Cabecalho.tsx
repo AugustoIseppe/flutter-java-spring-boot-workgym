@@ -21,10 +21,10 @@ export default function Cabecalho() {
 
   return (
     <header className="flex justify-between items-center bg-gradient-to-r from-zinc-100 via-white to-zinc-100 border-b px-6 py-3 gap-2 ">
-      <div className="flex items-center justify-center w-12 h-12 bg-black rounded-full">
-        <Image src={"/workgym-logo.png"} alt="Logo" width={40} height={40} />
+      <div className="flex items-center justify-center w-15 h-15 bg-black rounded-full">
+        <Image src={"/workgym-logo.png"} alt="Logo" width={50} height={50} />
       </div>
-      <span className="font-bold text-zinc-950 text-lg">
+      <span className="font-bold text-zinc-950 text-2xl">
         WorkGym - Portal de Gerenciamento da Academia
       </span>
 

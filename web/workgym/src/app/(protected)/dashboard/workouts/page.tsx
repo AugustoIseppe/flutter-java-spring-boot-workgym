@@ -374,7 +374,7 @@ export default function WorkoutsPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 p-4 border rounded shadow-2xl bg-white"
+          className="flex flex-col gap-4 p-4 border rounded shadow-sm bg-white"
         >
           <h2 className="text-xl font-semibold text-zinc-900">
             {editingId ? "Editar Treino" : "Adicionar Treino"}
@@ -515,7 +515,7 @@ export default function WorkoutsPage() {
           <div className="flex gap-2 mt-2">
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 shadow-2xl"
               disabled={!formData.userId || !formData.exerciseId} // Desabilitar se usuário ou exercício não selecionado
             >
               {editingId ? "Atualizar Treino" : "Cadastrar Treino"}
@@ -560,38 +560,38 @@ export default function WorkoutsPage() {
                 carregando.
               </p>
             ) : (
-              <div className="overflow-x-auto mt-2">
-                <table className="min-w-full bg-white rounded shadow text-sm text-black">
-                  <thead className="bg-gray-200">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div className="overflow-x-auto mt-2 text-center items-center justify-center rounded-xl shadow-sm">
+                <table className="min-w-full bg-white rounded shadow text-sm text-black text-center items-center justify-center">
+                  <thead className="bg-gray-200 text-center items-center justify-center">
+                    <tr className="items-center justify-centeritems-center justify-center">
+                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider items-center justify-center">
                         Exercício
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 py-3 text-center items-center justify-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Dia da Semana
                       </th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 py-3 text-center items-center justify-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Séries
                       </th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 py-3 text-center items-center justify-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Repetições
                       </th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 py-3 text-center items-center justify-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Observações
                       </th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-4 py-3 text-center items-center justify-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Ações
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white divide-y divide-gray-200 text-center items-center justify-center">
                     {selectedUserExercises.map((userExerciseItem) => (
                       <tr
                         key={userExerciseItem.id} // Usar o ID do UserExercise (que deve ser único)
-                        className="hover:bg-gray-50"
+                        className="hover:bg-gray-50 text-center items-center justify-center"
                       >
-                        <td className="px-4 py-2 whitespace-nowrap">
-                          <div className="flex items-center">
+                        <td className="px-4 py-2 whitespace-nowrap text-center items-center justify-center">
+                          <div className="flex items-center text-center justify-center">
                             {userExerciseItem.exercise.image && (
                               <img
                                 src={`/images/${userExerciseItem.exercise.image}`}
@@ -602,40 +602,40 @@ export default function WorkoutsPage() {
                                 }
                               />
                             )}
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">
+                            <div className="flex flex-col text-center items-center justify-center" >
+                              <div className="text-sm font-medium text-gray-900 text-center items-center justify-center">
                                 {userExerciseItem.exercise?.name ||
                                   "Nome não disponível"}
                               </div>
-                              <div className="text-xs text-gray-500">
+                              <div className="text-xs text-gray-500 text-center items-center justify-center ">
                                 {userExerciseItem.exercise?.description ||
                                   "Descrição não disponível"}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center items-center justify-center">
                           {userExerciseItem.weekDay}
                         </td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center">
+                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center items-center justify-center">
                           {userExerciseItem.series}
                         </td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center">
+                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center items-center justify-center">
                           {userExerciseItem.repetitions}
                         </td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 text-center items-center justify-center ">
                           {userExerciseItem.observation}
                         </td>
                         <td className="px-4 py-2 whitespace-nowrap text-sm font-medium text-center">
                           <button
                             onClick={() => handleEdit(userExerciseItem)}
-                            className="text-indigo-600 hover:text-indigo-900 mr-2"
+                            className="bg-blue-300 px-2 py-1 rounded hover:bg-blue-300 text-xs font-bold text-zinc-900 text-center items-center justify-center mr-0.5"
                           >
                             Editar
                           </button>
                           <button
                             onClick={() => handleDelete(userExerciseItem.id)}
-                            className="text-red-600 hover:text-red-900"
+                            className="bg-red-200 px-2 py-1 rounded hover:bg-red-300 text-xs font-bold text-zinc-900 ml-0.5"
                           >
                             Excluir
                           </button>
