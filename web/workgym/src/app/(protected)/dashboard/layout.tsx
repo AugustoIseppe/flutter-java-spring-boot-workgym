@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 // import { useAuth } from '@/contexts/AuthContext';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,5 +26,8 @@ export default function ProtectedLayout({
     return <div>Verificando autenticação...</div>;
   }
 
-  return <>{children}</>;
+  return <>
+  {children}
+  <Toaster />
+  </>;
 }

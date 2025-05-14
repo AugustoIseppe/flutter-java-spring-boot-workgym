@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Abel, Inter } from "next/font/google";
 import { AuthProvider } from "./authContext";
+import { Toaster } from "sonner";
 
 const abel = Abel ({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
         <AuthProvider>
           {/* Conteúdo da página será renderizado aqui */}
           {children}
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

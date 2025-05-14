@@ -3,6 +3,7 @@
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "@/app/authContext";
 import Pagina from "@/components/template/Pagina";
+import { toast } from "sonner";
 
 export default function Page() {
   const auth = useContext(AuthContext);
@@ -35,7 +36,13 @@ export default function Page() {
         setExercises(data);
       } catch (err) {
         console.error(err);
-        alert("Erro ao buscar exercícios.");
+        toast.error("Erro ao buscar exercícios.", {
+          duration: 3000,
+          style: {
+            background: "#ffb0ab",
+            color: "#fff",
+          },
+        });
       } finally {
         setLoading(false);
       }
@@ -71,10 +78,26 @@ export default function Page() {
         setExercises((prev) =>
           prev.map((ex) => (ex.id === editingId ? updatedExercise : ex))
         );
-        alert("Exercício atualizado!");
+        toast.success("Exercício atualizado com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#9ed7a0",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } else {
         setExercises((prev) => [...prev, updatedExercise]);
-        alert("Exercício cadastrado!");
+        toast.success("Exercício cadastrado com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#9ed7a0",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       }
 
       setFormData({
@@ -87,7 +110,15 @@ export default function Page() {
       setEditingId(null);
     } catch (err) {
       console.error(err);
-      alert("Erro ao salvar exercício.");
+      toast.error("Erro ao salvar exercício.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
@@ -105,10 +136,26 @@ export default function Page() {
       if (!res.ok) throw new Error("Erro ao excluir");
 
       setExercises((prev) => prev.filter((ex) => ex.id !== id));
-      alert("Exercício excluído!");
+      toast.success("Exercício excluído com sucesso!", {
+        duration: 3000,
+        style: {
+          background: "#9ed7a0",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     } catch (err) {
       console.error(err);
-      alert("Erro ao excluir.");
+      toast.error("Erro ao excluir exercício.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
