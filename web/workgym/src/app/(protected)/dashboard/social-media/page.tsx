@@ -3,6 +3,7 @@
 import { useState, useEffect, useContext } from "react";
 import Pagina from "@/components/template/Pagina";
 import AuthContext from "@/app/authContext";
+import { toast } from "sonner";
 
 export default function SocialMediaPage() {
   const auth = useContext(AuthContext);
@@ -32,7 +33,15 @@ export default function SocialMediaPage() {
         setSocialMediaResponse(data);
       } catch (err) {
         console.error(err);
-        alert("Erro ao buscar redes sociais.");
+        toast.error("Exercício atualizado com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#ffb0ab",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } finally {
         setLoading(false);
       }
@@ -71,18 +80,42 @@ export default function SocialMediaPage() {
             item.id === updatedSocialMedia.id ? updatedSocialMedia : item
           )
         );
-        alert("Rede social atualizada!");
+        toast.success("Item atualizado com sucesso", {
+          duration: 3000,
+          style: {
+            background: "#9ed7a0",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } else {
         // Adiciona novo item
         setSocialMediaResponse((prev) => [...prev, updatedSocialMedia]);
-        alert("Rede social cadastrada!");
+        toast.success("Item cadastrado com sucesso", {
+          duration: 3000,
+          style: {
+            background: "#9ed7a0",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       }
 
       setFormData({ name: "", link: "" });
       setEditingId(null);
     } catch (err) {
       console.error(err);
-      alert("Erro ao salvar.");
+      toast.error("Erro ao salvar", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
@@ -101,10 +134,26 @@ export default function SocialMediaPage() {
       if (!res.ok) throw new Error("Erro ao excluir");
 
       setSocialMediaResponse((prev) => prev.filter((item) => item.id !== id));
-      alert("Rede social excluída!");
+      toast.success("Item excluído com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#9ed7a0",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
     } catch (err) {
       console.error(err);
-      alert("Erro ao excluir.");
+      toast.error("Erro ao excluir", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
@@ -127,8 +176,6 @@ export default function SocialMediaPage() {
   return (
     <Pagina>
       <div className="max-w-5xl mx-auto p-4 flex flex-col gap-6 font-sans">
-       
-
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             name="name"
@@ -167,8 +214,8 @@ export default function SocialMediaPage() {
           </div>
         </form>
 
-        <div className="w-full h-0.5 bg-gray-300 my-1"  />
-             <div className="flex items-center justify-between bg-gray-100 p-2 rounded-4xl w-fit">
+        <div className="w-full h-0.5 bg-gray-300 my-1" />
+        <div className="flex items-center justify-between bg-gray-100 p-2 rounded-4xl w-fit">
           <p className="text-sm text-zinc-800 font-bold">
             {socialMediaResponse.length > 0
               ? `Total de redes sociais: ${socialMediaResponse.length}`
