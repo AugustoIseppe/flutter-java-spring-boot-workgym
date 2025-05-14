@@ -27,10 +27,10 @@ export default function DashboardPage() {
           <h1 className="text-4xl font-bold mb-4 text-zinc-950">Dashboard</h1>
           <p className="text-lg text-zinc-950">Bem-vindo ao seu painel!</p>
           <Image
-            src={"/workgym-logo.png"}
+            src={"/WORK.png"}
             alt="Explorador"
-            width={200}
-            height={200}
+            width={350}
+            height={350}
             className="mt-4"
           />
           
