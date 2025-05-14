@@ -1,180 +1,20 @@
 "use client";
 
-import { useEffect, useState, useContext } from "react";
-import AuthContext from "@/app/authContext";
-import Pagina from "@/components/template/Pagina";
-import { toast } from "sonner";
+import Pagina from "@/components/template/Pagina"; // Ajuste o caminho se necessário
+import { useExercises } from "@/features/exercices/hooks/useExercises";
 
-export default function Page() {
-  const auth = useContext(AuthContext);
-
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    muscleGroup: "",
-    equipment: "",
-    image: "",
-  });
-
-  const [exercises, setExercises] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editingId, setEditingId] = useState<string | null>(null);
-
-  // Buscar exercícios
-  useEffect(() => {
-    const fetchExercises = async () => {
-      try {
-        const res = await fetch("http://localhost:8080/exercises", {
-          headers: {
-            Authorization: `Bearer ${auth?.token}`,
-          },
-        });
-
-        if (!res.ok) throw new Error("Erro ao buscar exercícios");
-
-        const data = await res.json();
-        setExercises(data);
-      } catch (err) {
-        console.error(err);
-        toast.error("Erro ao buscar exercícios.", {
-          duration: 3000,
-          style: {
-            background: "#ffb0ab",
-            color: "#fff",
-          },
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExercises();
-  }, [auth?.token]);
-
-  // Cadastrar ou atualizar
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const method = editingId ? "PUT" : "POST";
-    const url = editingId
-      ? `http://localhost:8080/exercises/${editingId}`
-      : "http://localhost:8080/exercises";
-
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth?.token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error("Erro ao salvar");
-
-      const updatedExercise = await response.json();
-
-      if (editingId) {
-        setExercises((prev) =>
-          prev.map((ex) => (ex.id === editingId ? updatedExercise : ex))
-        );
-        toast.success("Exercício atualizado com sucesso!", {
-          duration: 3000,
-          style: {
-            background: "#9ed7a0",
-            color: "#fff",
-            borderRadius: "8px",
-            border: "1px solid #fff",
-          },
-        });
-      } else {
-        setExercises((prev) => [...prev, updatedExercise]);
-        toast.success("Exercício cadastrado com sucesso!", {
-          duration: 3000,
-          style: {
-            background: "#9ed7a0",
-            color: "#fff",
-            borderRadius: "8px",
-            border: "1px solid #fff",
-          },
-        });
-      }
-
-      setFormData({
-        name: "",
-        description: "",
-        muscleGroup: "",
-        equipment: "",
-        image: "",
-      });
-      setEditingId(null);
-    } catch (err) {
-      console.error(err);
-      toast.error("Erro ao salvar exercício.", {
-        duration: 3000,
-        style: {
-          background: "#ffb0ab",
-          color: "#fff",
-          borderRadius: "8px",
-          border: "1px solid #fff",
-        },
-      });
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("Tem certeza que deseja excluir?")) return;
-
-    try {
-      const res = await fetch(`http://localhost:8080/exercises/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${auth?.token}`,
-        },
-      });
-
-      if (!res.ok) throw new Error("Erro ao excluir");
-
-      setExercises((prev) => prev.filter((ex) => ex.id !== id));
-      toast.success("Exercício excluído com sucesso!", {
-        duration: 3000,
-        style: {
-          background: "#9ed7a0",
-          color: "#fff",
-          borderRadius: "8px",
-          border: "1px solid #fff",
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      toast.error("Erro ao excluir exercício.", {
-        duration: 3000,
-        style: {
-          background: "#ffb0ab",
-          color: "#fff",
-          borderRadius: "8px",
-          border: "1px solid #fff",
-        },
-      });
-    }
-  };
-
-  const handleEdit = (ex: any) => {
-    setFormData({
-      name: ex.name,
-      description: ex.description,
-      muscleGroup: ex.muscleGroup,
-      equipment: ex.equipment,
-      image: ex.image,
-    });
-    setEditingId(ex.id);
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+export default function ExercisesPage() {
+  const {
+    exercises,
+    loading,
+    editingId,
+    formData,
+    handleSubmit,
+    handleDelete,
+    handleEdit,
+    handleChange,
+    cancelEdit,
+  } = useExercises();
 
   return (
     <Pagina>
@@ -192,6 +32,7 @@ export default function Page() {
             onChange={handleChange}
             placeholder="Nome"
             className="border p-2 rounded text-black"
+            required
           />
           <textarea
             name="description"
@@ -199,6 +40,7 @@ export default function Page() {
             onChange={handleChange}
             placeholder="Descrição"
             className="border p-2 rounded text-black"
+            required
           />
           <input
             name="muscleGroup"
@@ -206,6 +48,7 @@ export default function Page() {
             onChange={handleChange}
             placeholder="Grupo muscular"
             className="border p-2 rounded text-black"
+            required
           />
           <input
             name="equipment"
@@ -213,12 +56,13 @@ export default function Page() {
             onChange={handleChange}
             placeholder="Equipamento"
             className="border p-2 rounded text-black"
+            required
           />
           <input
             name="image"
             value={formData.image}
             onChange={handleChange}
-            placeholder="Imagem (opcional)"
+            placeholder="URL da Imagem (opcional)"
             className="border p-2 rounded text-black"
           />
 
@@ -232,16 +76,7 @@ export default function Page() {
             {editingId && (
               <button
                 type="button"
-                onClick={() => {
-                  setEditingId(null);
-                  setFormData({
-                    name: "",
-                    description: "",
-                    muscleGroup: "",
-                    equipment: "",
-                    image: "",
-                  });
-                }}
+                onClick={cancelEdit} // Usando a função cancelEdit do hook
                 className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
               >
                 Cancelar
@@ -250,7 +85,7 @@ export default function Page() {
           </div>
         </form>
         <div className="flex items-center justify-center w-full h-0.5 bg-gray-300 my-2">
-          ______________________________________________________
+          {/* Linha divisória pode ser um componente ou um simples div estilizado */}
         </div>
         <h2 className="text-xl font-bold text-zinc-950">
           Exercícios cadastrados
@@ -284,13 +119,13 @@ export default function Page() {
                     <td className="px-4 py-2 text-center items-center justify-center text-gray-500 flex gap-2">
                       <button
                         onClick={() => handleEdit(ex)}
-                        className="text-zinc-950 bg-blue-200 px-2 py-1 rounded hover:bg-blue-200 text-xs font-bold"
+                        className="text-zinc-950 bg-blue-200 px-2 py-1 rounded hover:bg-blue-300 text-xs font-bold"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => handleDelete(ex.id)}
-                        className="bg-red-200 text-zinc-900 px-2 py-1 rounded hover:bg-red-700 text-xs font-bold"
+                        className="bg-red-200 text-zinc-900 px-2 py-1 rounded hover:bg-red-300 text-xs font-bold"
                       >
                         Excluir
                       </button>
@@ -305,3 +140,4 @@ export default function Page() {
     </Pagina>
   );
 }
+
