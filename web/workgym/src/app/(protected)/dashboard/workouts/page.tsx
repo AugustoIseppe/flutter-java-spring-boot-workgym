@@ -475,7 +475,6 @@ export default function WorkoutsPage() {
 
         {formData.userId && (
           <>
-            <h2 className="text-xl font-semibold mb-2">Treinos de {users.find(u => u.id === formData.userId)?.name || "Usuário Selecionado"}</h2>
             <div className="flex items-center justify-between bg-gray-100 p-2 rounded w-fit mb-4">
               <p className="text-xs text-zinc-800 font-bold">
                 {selectedUserExercises.length > 0

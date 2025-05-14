@@ -283,12 +283,12 @@ export default function UsersPage() {
             <table className="min-w-full bg-white rounded shadow text-sm text-black">
               <thead className="bg-gray-300">
                 <tr>
-                  <th className="px-4 py-2 text-center">Nome</th>
-                  <th className="px-4 py-2 text-center">Login</th>
-                  <th className="px-4 py-2 text-center">Cargo</th>
-                  <th className="px-4 py-2">Email</th>
-                  <th className="px-4 py-2">CPF</th>
-                  <th className="px-4 py-2">Ações</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Login</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cargo</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CPF</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                 </tr>
               </thead>
               <tbody>
