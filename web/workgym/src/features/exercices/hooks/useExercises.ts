@@ -25,7 +25,15 @@ export const useExercises = () => {
   useEffect(() => {
     const loadExercises = async () => {
       if (!auth?.token) {
-        toast.error("Usuário não autenticado.");
+        toast.error("Usuário não autenticado.", {
+          duration: 3000,
+          style: {
+            background: "#ffb0ab",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
         setLoading(false);
         return;
       }
@@ -35,7 +43,15 @@ export const useExercises = () => {
         setExercises(data);
       } catch (err) {
         console.error(err);
-        toast.error("Erro ao buscar exercícios.");
+        toast.error("Erro ao buscar exercícios.", {
+          duration: 3000,
+          style: {
+            background: "#ffb0ab",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } finally {
         setLoading(false);
       }
@@ -47,22 +63,50 @@ export const useExercises = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!auth?.token) {
-      toast.error("Usuário não autenticado.");
+      toast.error("Usuário não autenticado.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
       return;
     }
 
     try {
       let updatedExercise: Exercise;
       if (editingId) {
-        updatedExercise = await apiUpdateExercise(editingId, formData, auth.token);
+        updatedExercise = await apiUpdateExercise(
+          editingId,
+          formData,
+          auth.token
+        );
         setExercises((prev) =>
           prev.map((ex) => (ex.id === editingId ? updatedExercise : ex))
         );
-        toast.success("Exercício atualizado com sucesso!");
+        toast.success("Exercício atualizado com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#b2f2bb",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } else {
         updatedExercise = await apiCreateExercise(formData, auth.token);
         setExercises((prev) => [...prev, updatedExercise]);
-        toast.success("Exercício cadastrado com sucesso!");
+        toast.success("Exercício cadastrado com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#b2f2bb",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       }
       setFormData({
         name: "",
@@ -74,13 +118,29 @@ export const useExercises = () => {
       setEditingId(null);
     } catch (err) {
       console.error(err);
-      toast.error("Erro ao salvar exercício.");
+      toast.error("Erro ao salvar exercício.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
   const handleDelete = async (id: string) => {
     if (!auth?.token) {
-      toast.error("Usuário não autenticado.");
+      toast.error("Usuário não autenticado.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
       return;
     }
     if (!confirm("Tem certeza que deseja excluir?")) return;
@@ -88,10 +148,26 @@ export const useExercises = () => {
     try {
       await apiDeleteExercise(id, auth.token);
       setExercises((prev) => prev.filter((ex) => ex.id !== id));
-      toast.success("Exercício excluído com sucesso!");
+      toast.success("Exercício excluído com sucesso!", {
+        duration: 3000,
+        style: {
+          background: "#b2f2bb",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     } catch (err) {
       console.error(err);
-      toast.error("Erro ao excluir exercício.");
+      toast.error("Erro ao excluir exercício.", {
+        duration: 3000,
+        style: {
+          background: "#ffb0ab",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
@@ -135,4 +211,3 @@ export const useExercises = () => {
     cancelEdit,
   };
 };
-
