@@ -4,6 +4,7 @@ import Pagina from "@/components/template/Pagina"; // Ajuste o caminho se necess
 import { useExercises } from "@/features/exercices/hooks/useExercises";
 
 export default function ExercisesPage() {
+  
   const {
     exercises,
     loading,
