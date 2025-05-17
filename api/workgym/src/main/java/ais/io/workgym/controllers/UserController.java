@@ -4,6 +4,7 @@ import ais.io.workgym.dto.PasswordResetDTO;
 import ais.io.workgym.dto.user.ChangePasswordDTO;
 import ais.io.workgym.dto.user.UserRequestDTO;
 import ais.io.workgym.dto.user.UserResponseDTO;
+import ais.io.workgym.dto.user.UserUpdateRequestDTO;
 import ais.io.workgym.entities.User;
 import ais.io.workgym.repositories.UserRepository;
 import ais.io.workgym.services.UserService;
@@ -30,13 +31,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-//    @PostMapping
-//    public ResponseEntity<UserResponseDTO> insert(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-//        UserResponseDTO userResponseDTO = userService.insert(userRequestDTO);
-//        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userResponseDTO.getId()).toUri();
-//        return ResponseEntity.created(uri).body(userResponseDTO);
-//    }
 
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -65,20 +59,4 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-    @PutMapping("/{id}/reset-password")
-    @PreAuthorize("hasRole('ADMIN')") // só admins podem trocar senhas de outros usuários
-    public ResponseEntity<?> changePassword(@PathVariable UUID id, @RequestBody PasswordResetDTO dto) {
-        try {
-            userService.changePassword(id, dto.newPassword());
-            return ResponseEntity.ok("Senha atualizada com sucesso");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao atualizar senha: " + e.getMessage());
-        }
-    }
-
-
-
-
-
 }

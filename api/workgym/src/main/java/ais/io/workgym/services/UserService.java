@@ -2,6 +2,7 @@ package ais.io.workgym.services;
 
 import ais.io.workgym.dto.user.UserRequestDTO;
 import ais.io.workgym.dto.user.UserResponseDTO;
+import ais.io.workgym.dto.user.UserUpdateRequestDTO;
 import ais.io.workgym.entities.User;
 import ais.io.workgym.repositories.UserRepository;
 import ais.io.workgym.services.exceptions.DatabaseException;
@@ -21,15 +22,6 @@ public class UserService  {
 
     @Autowired
     private UserRepository userRepository;
-
-
-//    @Transactional
-//    public UserResponseDTO insert(UserRequestDTO userRequestDTO) {
-//        User userEntity = new User(data.login(), encryptedPassword, data.name(), data.email(), data.role(), data.cpf());
-//        copyDtoToEntity(userRequestDTO, userEntity);
-//        userEntity = userRepository.save(userEntity);
-//        return new UserResponseDTO(userEntity);
-//    }
 
     @Transactional
     public UserResponseDTO update(UUID id, UserRequestDTO userRequestDTO) {
@@ -80,7 +72,6 @@ public class UserService  {
 
         userRepository.save(user);
     }
-
 
     private void copyDtoToEntity(UserRequestDTO userRequestDTO, User userEntity) {
         userEntity.setName(userRequestDTO.getName());
