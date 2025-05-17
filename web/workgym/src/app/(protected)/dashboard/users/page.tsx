@@ -1,252 +1,22 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
+import { useUser } from "@/features/users/hooks/useUser";
 import Pagina from "@/components/template/Pagina";
-import AuthContext from "@/app/authContext";
-import { toast } from "sonner";
 
 export default function UsersPage() {
-  const auth = useContext(AuthContext);
 
-  const [users, setUsers] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editingId, setEditingId] = useState<string | null>(null);
-
-  const [formData, setFormData] = useState({
-    login: "",
-    password: "",
-    name: "",
-    email: "",
-    role: "",
-    cpf: "",
-    oldPassword: "",
-    newPassword: "",
-  });
-
-  // Buscar usuários ao carregar
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await fetch("http://localhost:8080/users", {
-          headers: {
-            Authorization: `Bearer ${auth?.token}`,
-          },
-        });
-        if (!res.ok) throw new Error("Erro ao buscar usuários");
-        const data = await res.json();
-        setUsers(data);
-      } catch (err) {
-        console.error(err);
-        toast.error("Erro ao buscar usuários.", {
-          duration: 3000,
-          style: {
-            background: "#ffb0ab",
-            color: "#fff",
-            borderRadius: "8px",
-            border: "1px solid #fff",
-          },
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUsers();
-  }, [auth?.token]);
-
- const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  const method = editingId ? "PUT" : "POST";
-  const url = editingId
-    ? `http://localhost:8080/users/${editingId}`
-    : "http://localhost:8080/auth/register";
-
-  try {
-    const response = await fetch(url, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
-      },
-      body: JSON.stringify(formData),
-    });
-
-    // Se a resposta não for OK, tenta extrair o texto de erro
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || "Erro ao cadastrar/atualizar usuário");
-    }
-
-    // Só tenta fazer parse do JSON se realmente for JSON
-    const contentType = response.headers.get("content-type");
-    const updatedUser = contentType?.includes("application/json")
-      ? await response.json()
-      : null;
-
-    if (editingId) {
-      setUsers((prev) =>
-        prev.map((item) => (item.id === updatedUser?.id ? updatedUser : item))
-      );
-      toast.success("Usuário atualizado com sucesso!", {
-        duration: 3000,
-        style: {
-          background: "#9ed7a0",
-          color: "#fff",
-          borderRadius: "8px",
-          border: "1px solid #fff",
-        },
-      });
-    } else {
-      if (updatedUser) {
-        setUsers((prevUsers) => [...prevUsers, updatedUser]);
-        toast.success("Usuário cadastrado com sucesso!", {
-          duration: 3000,
-          style: {
-            background: "#9ed7a0",
-            color: "#fff",
-            borderRadius: "8px",
-            border: "1px solid #fff",
-          },
-        });
-      } else {
-        toast.success("Usuário cadastrado com sucesso, mas nao foi possivel atualizar a lista", {
-          duration: 3000,
-          style: {
-            background: "#9ed7a0",
-            color: "#fff",
-            borderRadius: "8px",
-            border: "1px solid #fff",
-          },
-        });
-      }
-    }
-
-    setFormData({
-      login: "",
-      password: "",
-      name: "",
-      email: "",
-      role: "",
-      cpf: "",
-      oldPassword: "",
-      newPassword: "",
-    });
-    setEditingId(null);
-  } catch (err: any) {
-    console.error(err);
-    toast.error(err.message || "Erro ao cadastrar/atualizar usuário.", {
-      duration: 3000,
-      style: {
-        background: "#ffb0ab",
-        color: "#fff",
-        borderRadius: "8px",
-        border: "1px solid #fff",
-      },
-    });
-    }
-};
-
-
-  // Excluir usuário
-  const handleDelete = async (id: string) => {
-    if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
-
-    try {
-      const response = await fetch(`http://localhost:8080/users/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${auth?.token}`,
-        },
-      });
-
-      if (!response.ok) throw new Error("Erro ao excluir usuário");
-
-      setUsers((prev) => prev.filter((item) => item.id !== id));
-      toast.success("Usuário excluído com sucesso!", {
-        duration: 3000,
-        style: {
-          background: "#9ed7a0",
-          color: "#fff",
-          borderRadius: "8px",
-          border: "1px solid #fff",
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      toast.error("Erro ao excluir usuário.", {
-        duration: 3000,
-        style: {
-          background: "#ffb0ab",
-          color: "#fff",
-          borderRadius: "8px",
-          border: "1px solid #fff",
-        },
-      });
-    }
-  };
-
-  // Editar usuário
-  const handleEdit = (user: any) => {
-    setFormData({
-      login: user.login,
-      password: user.password,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      cpf: user.cpf,
-      oldPassword: "",
-      newPassword: "",
-    });
-    setEditingId(user.id);
-  };
-
-  // Atualizar formulário
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleChangePassword = async () => {
-  try {
-    const response = await fetch("http://localhost:8080/auth/change-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
-      },
-      body: JSON.stringify({
-        login: formData.login,
-        oldPassword: formData.oldPassword,
-        newPassword: formData.newPassword,
-      }),
-    });
-
-    const message = await response.text();
-
-    if (!response.ok) throw new Error(message);
-    toast.success(message || "Senha alterada com sucesso!", {
-      duration: 3000,
-      style: {
-        background: "#9ed7a0",
-        color: "#fff",
-        borderRadius: "8px",
-        border: "1px solid #fff",
-      },
-    });
-  } catch (err: any) {
-    console.error(err);
-    toast.error(err.message || "Erro ao alterar senha.", {
-      duration: 3000,
-      style: {
-        background: "#ffb0ab",
-        color: "#fff",
-        borderRadius: "8px",
-        border: "1px solid #fff",
-      },
-    });
-  }
-};
-
+  const {
+    users,
+    loading,
+    editingId,
+    formData,
+    handleSubmit,
+    handleDelete,
+    handleEdit,
+    handleChange,
+    cancelEdit,
+  } = useUser();
+  
 
   return (
     <Pagina>
@@ -266,7 +36,7 @@ export default function UsersPage() {
             required
             className="border p-2 rounded text-black"
           />
-          <input
+          {/* <input
             // type="password"
             name="password"
             value={formData.password}
@@ -274,7 +44,7 @@ export default function UsersPage() {
             placeholder="Senha"
             required
             className="border p-2 rounded text-black"
-          />
+          /> */}
           <input
             type="text"
             name="name"
@@ -298,7 +68,7 @@ export default function UsersPage() {
             name="role"
             value={formData.role}
             onChange={handleChange}
-            placeholder="Cargo"
+            placeholder="Role"
             className="border p-2 rounded text-black"
           />
           <input
@@ -319,19 +89,7 @@ export default function UsersPage() {
             {editingId && (
               <button
                 type="button"
-                onClick={() => {
-                  setEditingId(null);
-                  setFormData({
-                    login: "",
-                    password: "",
-                    name: "",
-                    email: "",
-                    role: "",
-                    cpf: "",
-                    oldPassword: "",
-                    newPassword: "",
-                  });
-                }}
+                onClick={cancelEdit}
                 className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
               >
                 Cancelar

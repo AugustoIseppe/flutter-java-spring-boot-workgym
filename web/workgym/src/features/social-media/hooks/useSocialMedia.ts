@@ -41,7 +41,15 @@ export const useSocialMedia = () => {
         setSocialMedia(data);
       } catch (err) {
         console.error(err);
-        toast.error("Erro ao buscar redes sociais.");
+        toast.error("Erro ao buscar redes sociais.", {
+          duration: 3000,
+          style: {
+            background: "#ffb0ab",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } finally {
         setLoading(false);
       }
