@@ -94,7 +94,7 @@ export default function SocialMediaPage() {
                 {socialMedia.map((item, index) => (
                   <tr
                     key={item.id}
-                    className="hover:bg-gray-50 transition-colors duration-200 text-center"
+                    className="hover:bg-gray-100 transition-colors duration-200 text-center"
                   >
                     <td className="px-4 py-2 text-sm font-medium text-gray-500 whitespace-nowrap text-center">
                       {item.name}

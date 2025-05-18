@@ -111,13 +111,13 @@ export default function ExercisesPage() {
                 {exercises.map((ex, index) => (
                   <tr
                     key={ex.id}
-                    className={index % 2 === 0 ? "bg-gray-100" : ""}
+                     className="hover:bg-gray-100 text-center items-center justify-center"
                   >
-                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500">{ex.name}</td>
-                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500">{ex.description}</td>
-                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500">{ex.muscleGroup}</td>
-                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500">{ex.equipment}</td>
-                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500 flex gap-2">
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500 tracking-wider">{ex.name}</td>
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500 tracking-wider">{ex.description}</td>
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500 tracking-wider">{ex.muscleGroup}</td>
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500 tracking-wider">{ex.equipment}</td>
+                    <td className="px-4 py-2 text-center items-center justify-center text-gray-500 tracking-wider flex gap-2">
                       <button
                         onClick={() => handleEdit(ex)}
                         className="text-zinc-950 bg-blue-200 px-2 py-1 rounded hover:bg-blue-300 text-xs font-bold"

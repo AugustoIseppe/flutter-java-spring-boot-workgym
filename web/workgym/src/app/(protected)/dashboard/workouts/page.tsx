@@ -236,7 +236,7 @@ export default function WorkoutsPage() {
                     {selectedUserExercises.map((userExerciseItem) => (
                       <tr
                         key={userExerciseItem.id}
-                        className="hover:bg-gray-50 text-center items-center justify-center"
+                        className="hover:bg-gray-100 text-center items-center justify-center"
                       >
                         <td className="px-4 py-2 whitespace-nowrap text-center items-center justify-center">
                           <div className="flex items-center text-center justify-center">

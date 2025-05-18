@@ -128,7 +128,7 @@ export default function UsersPage() {
                 {users.map((user, index) => (
                   <tr
                     key={user.id}
-                    className="hover:bg-gray-50 transition-colors duration-200 text-center"
+                    className="hover:bg-gray-100 transition-colors duration-200 text-center"
                   >
                     
                     <td className="px-4 py-2 text-gray-500 whitespace-nowrap text-center">{user.name}</td>
