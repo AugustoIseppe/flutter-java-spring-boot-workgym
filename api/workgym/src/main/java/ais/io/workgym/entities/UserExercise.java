@@ -13,10 +13,10 @@ public class UserExercise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User users;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     private Exercise exercise;
 
     @Enumerated(EnumType.STRING)
