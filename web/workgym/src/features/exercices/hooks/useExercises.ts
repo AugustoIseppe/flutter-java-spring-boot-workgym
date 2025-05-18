@@ -28,7 +28,7 @@ export const useExercises = () => {
         toast.error("Usuário não autenticado.", {
           duration: 3000,
           style: {
-            background: "#ffb0ab",
+            background: "#FF0000",
             color: "#fff",
             borderRadius: "8px",
             border: "1px solid #fff",
@@ -46,7 +46,7 @@ export const useExercises = () => {
         toast.error("Erro ao buscar exercícios.", {
           duration: 3000,
           style: {
-            background: "#ffb0ab",
+            background: "#FF0000",
             color: "#fff",
             borderRadius: "8px",
             border: "1px solid #fff",
@@ -66,7 +66,7 @@ export const useExercises = () => {
       toast.error("Usuário não autenticado.", {
         duration: 3000,
         style: {
-          background: "#ffb0ab",
+          background: "#FF0000",
           color: "#fff",
           borderRadius: "8px",
           border: "1px solid #fff",
@@ -89,10 +89,10 @@ export const useExercises = () => {
         toast.success("Exercício atualizado com sucesso!", {
           duration: 3000,
           style: {
-            background: "#b2f2bb",
-            color: "#fff",
+            background: "#00FF7F",
+            color: "#4F4F4F",
             borderRadius: "8px",
-            border: "1px solid #fff",
+            border: "2px solid #fff",
           },
         });
       } else {
@@ -101,10 +101,10 @@ export const useExercises = () => {
         toast.success("Exercício cadastrado com sucesso!", {
           duration: 3000,
           style: {
-            background: "#b2f2bb",
-            color: "#fff",
+            background: "#00FF7F",
+            color: "#4F4F4F",
             borderRadius: "8px",
-            border: "1px solid #fff",
+            border: "2px solid #fff",
           },
         });
       }
@@ -121,7 +121,7 @@ export const useExercises = () => {
       toast.error("Erro ao salvar exercício.", {
         duration: 3000,
         style: {
-          background: "#ffb0ab",
+          background: "#FF0000",
           color: "#fff",
           borderRadius: "8px",
           border: "1px solid #fff",
@@ -135,7 +135,7 @@ export const useExercises = () => {
       toast.error("Usuário não autenticado.", {
         duration: 3000,
         style: {
-          background: "#ffb0ab",
+          background: "#FF0000",
           color: "#fff",
           borderRadius: "8px",
           border: "1px solid #fff",
@@ -151,10 +151,10 @@ export const useExercises = () => {
       toast.success("Exercício excluído com sucesso!", {
         duration: 3000,
         style: {
-          background: "#b2f2bb",
-          color: "#fff",
+          background: "#00FF7F",
+            color: "#4F4F4F",
           borderRadius: "8px",
-          border: "1px solid #fff",
+          border: "2px solid #fff",
         },
       });
     } catch (err) {
@@ -162,7 +162,7 @@ export const useExercises = () => {
       toast.error("Erro ao excluir exercício.", {
         duration: 3000,
         style: {
-          background: "#ffb0ab",
+          background: "#FF0000",
           color: "#fff",
           borderRadius: "8px",
           border: "1px solid #fff",

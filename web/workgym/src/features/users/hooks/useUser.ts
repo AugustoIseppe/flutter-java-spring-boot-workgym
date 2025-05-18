@@ -29,7 +29,7 @@ export const useUser = () => {
                 toast.error("Usuário não autenticado.", {
                     duration: 3000,
                     style: {
-                        background: "#ffb0ab",
+                        background: "#FF0000",
                         color: "#fff",
                         borderRadius: "8px",
                         border: "1px solid #fff",
@@ -48,7 +48,7 @@ export const useUser = () => {
                 toast.error("Erro ao buscar usuários.",{
                     duration: 3000,
                     style: {
-                        background: "#ffb0ab",
+                        background: "#FF0000",
                         color: "#fff",
                         borderRadius: "8px",
                         border: "1px solid #fff",
@@ -69,7 +69,7 @@ export const useUser = () => {
             toast.error("Usuário não autenticado.", {
                 duration: 3000,
                 style: {
-                    background: "#ffb0ab",
+                    background: "#FF0000",
                     color: "#fff",
                     borderRadius: "8px",
                     border: "1px solid #fff",
@@ -90,7 +90,7 @@ export const useUser = () => {
                 toast.success("Usuário atualizado com sucesso!", {
                     duration: 3000,
                     style: {
-                        background: "#a4ffaf",
+                        background: "#00FF00",
                         color: "#fff",
                         borderRadius: "8px",
                         border: "1px solid #fff",
@@ -102,7 +102,7 @@ export const useUser = () => {
                 toast.success("Usuário criado com sucesso!", {
                     duration: 3000,
                     style: {
-                        background: "#a4ffaf",
+                        background: "#00FF00",
                         color: "#fff",
                         borderRadius: "8px",
                         border: "1px solid #fff",
@@ -123,7 +123,7 @@ export const useUser = () => {
             toast.error("Erro ao salvar usuário.", {
                 duration: 3000,
                 style: {
-                    background: "#ffb0ab",
+                    background: "#FF0000",
                     color: "#fff",
                     borderRadius: "8px",
                     border: "1px solid #fff",
@@ -137,7 +137,7 @@ export const useUser = () => {
             toast.error("Usuário não autenticado.", {
                 duration: 3000,
                 style: {
-                    background: "#ffb0ab",
+                    background: "#FF0000",
                     color: "#fff",
                     borderRadius: "8px",
                     border: "1px solid #fff",
@@ -153,7 +153,7 @@ export const useUser = () => {
             toast.success("Usuário excluído com sucesso!", {
                 duration: 3000,
                 style: {
-                    background: "#a4ffaf",
+                    background: "#00FF00",
                     color: "#fff",
                     borderRadius: "8px",
                     border: "1px solid #fff",
@@ -164,7 +164,7 @@ export const useUser = () => {
             toast.error("Erro ao excluir usuário.", {
                 duration: 3000,
                 style: {
-                    background: "#ffb0ab",
+                    background: "#FF0000",
                     color: "#fff",
                     borderRadius: "8px",
                     border: "1px solid #fff",

@@ -25,7 +25,7 @@ export const useSocialMedia = () => {
         toast.error("Usuário não autenticado.", {
           duration: 3000,
           style: {
-            background: "#ffb0ab",
+            background: "#FF0000",
             color: "#fff",
             borderRadius: "8px",
             border: "1px solid #fff",
@@ -44,7 +44,7 @@ export const useSocialMedia = () => {
         toast.error("Erro ao buscar redes sociais.", {
           duration: 3000,
           style: {
-            background: "#ffb0ab",
+            background: "#FF0000",
             color: "#fff",
             borderRadius: "8px",
             border: "1px solid #fff",
@@ -65,7 +65,7 @@ export const useSocialMedia = () => {
       toast.error("Usuário não autenticado.", {
         duration: 3000,
         style: {
-          background: "#ffb0ab",
+          background: "#FF0000",
           color: "#fff",
           borderRadius: "8px",
           border: "1px solid #fff",
@@ -117,7 +117,7 @@ export const useSocialMedia = () => {
       toast.error("Erro ao cadastrar rede social.", {
         duration: 3000,
         style: {
-          background: "#ffb0ab",
+          background: "#FF0000",
           color: "#fff",
           borderRadius: "8px",
           border: "1px solid #fff",
@@ -131,7 +131,7 @@ export const useSocialMedia = () => {
       toast.error("Usuário não autenticado.", {
         duration: 3000,
         style: {
-          background: "#ffb0ab",
+          background: "#FF0000",
           color: "#fff",
           borderRadius: "8px",
           border: "1px solid #fff",
@@ -158,7 +158,7 @@ export const useSocialMedia = () => {
       toast.error("Erro ao excluir rede social.", {
         duration: 3000,
         style: {
-          background: "#ffb0ab",
+          background: "#FF0000",
           color: "#fff",
           borderRadius: "8px",
           border: "1px solid #fff",

@@ -52,7 +52,15 @@ export const useUserExercises = () => {
         setExercises(exercisesData);
       } catch (err) {
         console.error("Erro ao carregar dados iniciais:", err);
-        toast.error("Erro ao carregar dados iniciais.");
+        toast.error("Erro ao carregar dados iniciais.", {
+          duration: 3000,
+          style: {
+            background: "#FF0000",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } finally {
         setLoading(false);
       }
@@ -79,7 +87,15 @@ export const useUserExercises = () => {
         setSelectedUserExercises(data);
       } catch (err) {
         console.error("Falha ao buscar treinos do usuário:", err);
-        toast.error("Erro ao buscar treinos do usuário.");
+        toast.error("Erro ao buscar treinos do usuário.", {
+          duration: 3000,
+          style: {
+            background: "#FF0000",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       }
     };
 
@@ -90,12 +106,28 @@ export const useUserExercises = () => {
     e.preventDefault();
     
     if (!auth?.token) {
-      toast.error("Erro de autenticação. Por favor, faça login novamente.");
+      toast.error("Erro de autenticação. Por favor, faça login novamente.", {
+        duration: 3000,
+        style: {
+          background: "#FF0000",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
       return;
     }
     
     if (!formData.exerciseId) {
-      toast.error("Selecione um exercício antes de cadastrar/atualizar o treino.");
+      toast.error("Selecione um exercício antes de cadastrar/atualizar o treino.", {
+        duration: 3000,
+        style: {
+          background: "#FF0000",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
       return;
     }
 
@@ -107,17 +139,41 @@ export const useUserExercises = () => {
         setSelectedUserExercises(prev => 
           prev.map(item => item.id === editingId ? updatedUserExercise : item)
         );
-        toast.success("Treino atualizado com sucesso!");
+        toast.success("Treino atualizado com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#00FF00",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       } else {
         updatedUserExercise = await createUserExercise(formData, auth.token);
         setSelectedUserExercises(prev => [...prev, updatedUserExercise]);
-        toast.success("Treino cadastrado com sucesso!");
+        toast.success("Treino cadastrado com sucesso!", {
+          duration: 3000,
+          style: {
+            background: "#00FF00",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+          },
+        });
       }
       
       resetForm();
     } catch (err: any) {
       console.error(err);
-      toast.error(err.message || "Erro ao cadastrar/atualizar treino.");
+      toast.error(err.message || "Erro ao cadastrar/atualizar treino.", {
+        duration: 3000,
+        style: {
+          background: "#FF0000",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
@@ -127,10 +183,26 @@ export const useUserExercises = () => {
     try {
       await deleteUserExercise(id, auth.token);
       setSelectedUserExercises(prev => prev.filter(item => item.id !== id));
-      toast.success("Treino excluído com sucesso!");
+      toast.success("Treino excluído com sucesso!", {
+        duration: 3000,
+        style: {
+          background: "#00FF00",
+            color: "#fff",
+            borderRadius: "8px",
+            border: "1px solid #fff",
+        },
+      });
     } catch (err) {
       console.error(err);
-      toast.error("Erro ao excluir treino.");
+      toast.error("Erro ao excluir treino.", {
+        duration: 3000,
+        style: {
+          background: "#FF0000",
+          color: "#fff",
+          borderRadius: "8px",
+          border: "1px solid #fff",
+        },
+      });
     }
   };
 
