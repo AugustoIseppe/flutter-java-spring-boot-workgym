@@ -36,15 +36,15 @@ export default function UsersPage() {
             required
             className="border p-2 rounded text-black"
           />
-          {/* <input
-            // type="password"
+          <input
+            type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             placeholder="Senha"
             required
             className="border p-2 rounded text-black"
-          /> */}
+          />
           <input
             type="text"
             name="name"
@@ -114,14 +114,14 @@ export default function UsersPage() {
         ) : (
           <div className="overflow-x-auto rounded-xl shadow-sm">
             <table className="min-w-full bg-white rounded shadow text-sm text-black">
-              <thead className="bg-gray-200 text-center">
+              <thead className="bg-gray-300 text-center">
                 <tr className="text-center">
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Login</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Cargo</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">CPF</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-800 uppercase tracking-wider">Nome</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-800 uppercase tracking-wider">Login</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-800 uppercase tracking-wider">Cargo</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-800 uppercase tracking-wider">Email</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-800 uppercase tracking-wider">CPF</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-800 uppercase tracking-wider">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -131,12 +131,12 @@ export default function UsersPage() {
                     className="hover:bg-gray-100 transition-colors duration-200 text-center"
                   >
                     
-                    <td className="px-4 py-2 text-gray-500 whitespace-nowrap text-center">{user.name}</td>
-                    <td className="px-4 py-2 text-gray-500 whitespace-nowrap text-center">{user.login}</td>
-                    <td className="px-4 py-2 text-gray-500 whitespace-nowrap text-center">{user.role}</td>
-                    <td className="px-4 py-2 text-gray-500 whitespace-nowrap text-center">{user.email}</td>
-                    <td className="px-4 py-2 text-gray-500 whitespace-nowrap text-center">{user.cpf}</td>
-                    <td className="px-4 py-2 text-gray-500 whitespace-nowrap text-center">
+                    <td className="px-4 py-2 text-gray-800 whitespace-nowrap text-center">{user.name}</td>
+                    <td className="px-4 py-2 text-gray-800 whitespace-nowrap text-center">{user.login}</td>
+                    <td className="px-4 py-2 text-gray-800 whitespace-nowrap text-center">{user.role}</td>
+                    <td className="px-4 py-2 text-gray-800 whitespace-nowrap text-center">{user.email}</td>
+                    <td className="px-4 py-2 text-gray-800 whitespace-nowrap text-center">{user.cpf}</td>
+                    <td className="px-4 py-2 text-gray-800 whitespace-nowrap text-center">
                       <button
                         onClick={() => handleEdit(user)}
                         className="bg-blue-200 px-2 py-1 rounded hover:bg-blue-300 text-xs font-bold m-1"

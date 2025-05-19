@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { toast } from "sonner";
 import AuthContext from "@/app/authContext";
-import { User, UserFormData } from "../types";
+import { User, UserFormData, UserFormDataUpdate } from "../types";
 import {
     fetchUsers as apiFetchUser,
     createUser as apiCreateUser,
@@ -16,12 +16,13 @@ export const useUser = () => {
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState<UserFormData>({
         login: "",
-        // password: "",
+        password: "",
         name: "",
         email: "",
-        role: "",
+        role: "USER",
         cpf: "",
     });
+
 
     useEffect(() => {
         const loadUsers = async () => {
@@ -66,69 +67,42 @@ export const useUser = () => {
         e.preventDefault();
 
         if (!auth?.token) {
-            toast.error("Usuário não autenticado.", {
-                duration: 3000,
-                style: {
-                    background: "#FF0000",
-                    color: "#fff",
-                    borderRadius: "8px",
-                    border: "1px solid #fff",
-                },
-            });
+            toast.error("Usuário não autenticado.");
             return;
         }
 
         try {
             let updatedUser: User;
+
             if (editingId) {
-                updatedUser = await apiUpdateUser(editingId, formData, auth.token);
+                // Copia o formData e remove o campo `password` se ele estiver vazio
+                const { password, ...dataToSend } = formData;
+                updatedUser = await apiUpdateUser(editingId, dataToSend, auth.token);
+
                 setUsers((prevUsers) =>
-                    prevUsers.map((user) =>
-                        user.id === editingId ? updatedUser : user
-                    )
+                    prevUsers.map((user) => (user.id === editingId ? updatedUser : user))
                 );
-                toast.success("Usuário atualizado com sucesso!", {
-                    duration: 3000,
-                    style: {
-                        background: "#00FF00",
-                        color: "#fff",
-                        borderRadius: "8px",
-                        border: "1px solid #fff",
-                    },
-                });
+
+                toast.success("Usuário atualizado com sucesso!");
             } else {
                 updatedUser = await apiCreateUser(formData, auth.token);
+
                 setUsers((prevUsers) => [...prevUsers, updatedUser]);
-                toast.success("Usuário criado com sucesso!", {
-                    duration: 3000,
-                    style: {
-                        background: "#00FF00",
-                        color: "#fff",
-                        borderRadius: "8px",
-                        border: "1px solid #fff",
-                    },
-                });
+                toast.success("Usuário criado com sucesso!");
             }
+
             setFormData({
                 login: "",
-                // password: "",
+                password: "",
                 name: "",
                 email: "",
-                role: "",
+                role: "USER",
                 cpf: "",
             });
             setEditingId(null);
         } catch (err) {
             console.error(err);
-            toast.error("Erro ao salvar usuário.", {
-                duration: 3000,
-                style: {
-                    background: "#FF0000",
-                    color: "#fff",
-                    borderRadius: "8px",
-                    border: "1px solid #fff",
-                },
-            });
+            toast.error("Erro ao salvar usuário.");
         }
     };
 
@@ -177,7 +151,7 @@ export const useUser = () => {
         setEditingId(user.id);
         setFormData({
             login: user.login,
-            // password: user.password,
+            password: "", // senha deve ser redefinida se for mudar
             name: user.name,
             email: user.email,
             role: user.role,
@@ -185,21 +159,21 @@ export const useUser = () => {
         });
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({
-            ...formData, 
+     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData((prev) => ({
+            ...prev,
             [e.target.name]: e.target.value,
-        });
-    }
+        }));
+    };
 
     const cancelEdit = () => {
         setEditingId(null);
         setFormData({
             login: "",
-            // password: "",
+            password: "",
             name: "",
             email: "",
-            role: "",
+            role: "USER",
             cpf: "",
         });
     };

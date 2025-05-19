@@ -1,10 +1,15 @@
 package ais.io.workgym.dto.user;
 
 import ais.io.workgym.entities.User;
+import ais.io.workgym.entities.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UserRequestDTO {
+
+    @NotBlank(message = "Informe o login do usuário")
+    @Size(min = 3, max = 80, message = "O login precisa ter de 3 a 80 caracteres")
+    private String login;
 
     @NotBlank(message = "Informe o nome do usuário")
     @Size(min = 3, max = 80, message = "O nome precisa ter de 3 a 80 caracteres")
@@ -14,9 +19,10 @@ public class UserRequestDTO {
     @Size(min = 3, max = 80, message = "O e-mail precisa ter de 3 a 80 caracteres")
     private String email;
 
-    @NotBlank(message = "Informe a senha do usuário")
-    @Size(min = 6, max = 80, message = "A senha precisa ter de 6 a 80 caracteres")
-    private String password;
+    //role
+    @NotBlank(message = "Informe o papel do usuário")
+    @Size(min = 3, max = 80, message = "O papel precisa ter de 3 a 80 caracteres")
+    private UserRole role;
 
     @NotBlank(message = "Informe o CPF do usuário")
     @Size(min = 11, max = 11, message = "O CPF precisa ter 11 caracteres")
@@ -25,18 +31,28 @@ public class UserRequestDTO {
     public UserRequestDTO() {
     }
 
-    public UserRequestDTO(String name, String email, String password, String cpf) {
+    public UserRequestDTO(String login, String name, String email, UserRole role, String cpf) {
+        this.login = login;
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.role = role;
         this.cpf = cpf;
     }
 
     public UserRequestDTO(User userEntity) {
-        name = userEntity.getName();
-        email = userEntity.getEmail();
-        password = userEntity.getPassword();
-        cpf = userEntity.getCpf();
+        this.login = userEntity.getLogin();
+        this.name = userEntity.getName();
+        this.email = userEntity.getEmail();
+        this.role = userEntity.getRole();
+        this.cpf = userEntity.getCpf();
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getName() {
@@ -55,12 +71,12 @@ public class UserRequestDTO {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public String getCpf() {
@@ -71,3 +87,5 @@ public class UserRequestDTO {
         this.cpf = cpf;
     }
 }
+
+

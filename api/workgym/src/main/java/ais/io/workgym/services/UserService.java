@@ -2,7 +2,6 @@ package ais.io.workgym.services;
 
 import ais.io.workgym.dto.user.UserRequestDTO;
 import ais.io.workgym.dto.user.UserResponseDTO;
-import ais.io.workgym.dto.user.UserUpdateRequestDTO;
 import ais.io.workgym.entities.User;
 import ais.io.workgym.repositories.UserRepository;
 import ais.io.workgym.services.exceptions.DatabaseException;
@@ -74,9 +73,10 @@ public class UserService  {
     }
 
     private void copyDtoToEntity(UserRequestDTO userRequestDTO, User userEntity) {
+        userEntity.setLogin(userRequestDTO.getLogin());
         userEntity.setName(userRequestDTO.getName());
         userEntity.setEmail(userRequestDTO.getEmail());
-        userEntity.setPassword(userRequestDTO.getPassword());
+        userEntity.setRole(userRequestDTO.getRole());
         userEntity.setCpf(userRequestDTO.getCpf());
     }
 }

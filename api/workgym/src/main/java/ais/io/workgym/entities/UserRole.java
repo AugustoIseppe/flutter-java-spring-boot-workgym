@@ -1,8 +1,8 @@
 package ais.io.workgym.entities;
 
 public enum UserRole {
-    ADMIN("admin"), // posicao 0
-    USER("user");   // posicao 1
+    ADMIN("ADMIN"), // posicao 0
+    USER("USER");   // posicao 1
 
     private String role;
 
