@@ -182,6 +182,8 @@ export const useUserExercises = () => {
 
     try {
       await deleteUserExercise(id, auth.token);
+      console.log("id", id);
+      console.log("selectedUserExercises", selectedUserExercises);
       setSelectedUserExercises(prev => prev.filter(item => item.id !== id));
       toast.success("Treino excluído com sucesso!", {
         duration: 3000,

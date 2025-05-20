@@ -109,7 +109,9 @@ export const deleteUserExercise = async (
   token: string | undefined
 ): Promise<void> => {
   if (!token) throw new Error("Token de autenticação não fornecido.");
-  
+  console.log("ID do treino a ser excluído:", id);
+  if (!id) throw new Error("ID do treino não fornecido.");
+  console.log("Tentando excluir treino com ID:", id);
   const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
     headers: {

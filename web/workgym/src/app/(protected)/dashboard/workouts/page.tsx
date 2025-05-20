@@ -282,7 +282,7 @@ export default function WorkoutsPage() {
                             Editar
                           </button>
                           <button
-                            onClick={() => handleDelete(userExerciseItem.id)}
+                            onClick={() => handleDelete(userExerciseItem.exerciseId)}
                             className="bg-red-200 px-2 py-1 rounded hover:bg-red-300 text-xs font-bold text-zinc-900 ml-0.5"
                           >
                             Excluir
