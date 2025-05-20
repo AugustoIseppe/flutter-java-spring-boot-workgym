@@ -176,3 +176,4 @@ web-workgym/
 
 Desenvolvido como um projeto de estudo. Augusto Iseppe 🚀
 
+![Image](https://github.com/user-attachments/assets/17527036-16d1-4872-9ce0-9e13948e80aa)
