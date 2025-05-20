@@ -2,7 +2,7 @@
 
 ## 📜 Descrição
 
-O WorkGym é um projeto de estudo que simula uma API RESTful e aplicações frontend (mobile e web) para um sistema de academia. Desenvolvido com foco no aprendizado e aplicação de tecnologias modernas, o projeto abrange desde o backend robusto com Java e Spring Boot, passando por um aplicativo mobile intuitivo com Flutter, até uma interface web dinâmica com Next.js (dashboard para controle de alunos e treinos). A ideia central é demonstrar a integração dessas tecnologias para criar uma solução completa, mesmo que em um escopo de estudo!
+O WorkGym é um projeto usado para estudo utilizando uma API RESTful e aplicações frontend (mobile e web) para um sistema de uma academia. O projeto abrange o backend feito com Java e Spring Boot, um aplicativo mobile com Flutter, e uma interface web com Next.js (dashboard para controle de alunos e treinos)
 
 
 ## 🚀 Tecnologias Utilizadas
