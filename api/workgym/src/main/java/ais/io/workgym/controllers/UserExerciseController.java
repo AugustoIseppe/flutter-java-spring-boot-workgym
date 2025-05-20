@@ -78,4 +78,9 @@ public class UserExerciseController {
         return ResponseEntity.ok(exercises);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        userExerciseService.deleteUserExercise(id);
+        return ResponseEntity.noContent().build();
+    }
 }

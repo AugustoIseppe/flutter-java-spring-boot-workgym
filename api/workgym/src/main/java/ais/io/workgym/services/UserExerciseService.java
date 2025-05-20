@@ -144,5 +144,12 @@ public class UserExerciseService {
         return userExerciseRepository.findUserExercisesByUserId(userId);
     }
 
+    @Transactional
+    public void deleteUserExercise(UUID id) {
+//        UserExercise userExercise = userExerciseRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Exercício do usuário não encontrado"));
+        userExerciseRepository.deleteById(id);
+    }
+
 }
 

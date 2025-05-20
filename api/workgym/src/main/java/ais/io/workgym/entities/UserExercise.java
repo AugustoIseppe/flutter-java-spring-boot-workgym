@@ -16,7 +16,7 @@ public class UserExercise {
     @ManyToOne
     private User users;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Exercise exercise;
 
     @Enumerated(EnumType.STRING)

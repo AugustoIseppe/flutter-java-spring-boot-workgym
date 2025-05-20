@@ -53,4 +53,7 @@ public interface UserExerciseRepository extends JpaRepository<UserExercise, UUID
             """, nativeQuery = true)
     List<UserExerciseProjection> findUserExercisesByUserId(@Param("userId") UUID userId);
 
+
+    void deleteByUsersId(UUID userId);
+
 }
