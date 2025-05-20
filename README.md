@@ -163,42 +163,13 @@ web-workgym/
 │   └── layout.tsx
 │   └── page.tsx
 ├── components/          # Componentes React reutilizáveis
+├── features/            # types/services/hooks
 ├── public/              # Arquivos estáticos
 ├── lib/                 # Funções utilitárias, hooks
 ├── styles/              # Estilos globais (se não usar globals.css)
 ├── next.config.mjs      # Configurações do Next.js
 ├── package.json         # Dependências e scripts
 └── tsconfig.json        # Configurações do TypeScript
-```
-
-## ✅ Testes
-
-**Backend (Java/Spring Boot):**
-Para rodar os testes automatizados (JUnit, Spring Boot Starter Test, Spring Security Test):
-
-```bash
-# Navegue até o diretório do backend
-cd caminho/para/backend-workgym
-mvn test
-```
-
-**Mobile (Flutter):**
-Para rodar os testes (flutter_test, flutter_lints):
-
-```bash
-# Navegue até o diretório do mobile
-cd caminho/para/mobile-workgym
-flutter test
-```
-
-**Web (Next.js):**
-Para rodar os linters (ESLint) e testes (se configurados com Jest, Playwright, etc.):
-
-```bash
-# Navegue até o diretório da web
-cd caminho/para/web-workgym
-npm run lint
-# npm run test (se houver script de teste configurado)
 ```
 
 ## 👤 Autor
