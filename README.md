@@ -2,7 +2,7 @@
 -                                                                                       -
 ![Image](https://github.com/user-attachments/assets/23366123-5d94-401f-b2e4-9dd418f304be)
 
-# 🌐 Projeto Full Stack - Plataforma Multi-Plataforma
+# 🌐 Projeto Full Stack
 
 ## Backend - Java / Spring Boot
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
