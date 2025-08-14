@@ -1,3 +1,46 @@
+![Image](https://github.com/user-attachments/assets/17527036-16d1-4872-9ce0-9e13948e80aa)
+-                                                                                       -
+![Image](https://github.com/user-attachments/assets/23366123-5d94-401f-b2e4-9dd418f304be)
+
+# 🌐 Projeto Full Stack - Plataforma Multi-Plataforma
+
+## Backend - Java / Spring Boot
+![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-brightgreen?logo=springboot&logoColor=white)
+![Spring Web](https://img.shields.io/badge/Spring%20Web-REST-blue)
+![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-ORM-lightgrey)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue?logo=postgresql&logoColor=white)
+![Spring Security](https://img.shields.io/badge/Spring%20Security-Secure-red)
+![JWT](https://img.shields.io/badge/JWT-Auth-orange)
+![Lombok](https://img.shields.io/badge/Lombok-Annotations-yellow)
+![Maven](https://img.shields.io/badge/Maven-3.9+-C71A36?logo=apachemaven&logoColor=white)
+
+## Mobile - Flutter
+![Flutter](https://img.shields.io/badge/Flutter-3.7.2-blue?logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-3.2-blue?logo=dart&logoColor=white)
+![Provider](https://img.shields.io/badge/Provider-State%20Management-purple)
+![HTTP](https://img.shields.io/badge/http-Client-lightblue)
+![Validatorless](https://img.shields.io/badge/Validatorless-Form%20Validation-green)
+![Shared Preferences](https://img.shields.io/badge/Shared%20Preferences-Local%20Storage-orange)
+![Sign In Button](https://img.shields.io/badge/Social%20Login-Buttons-lightgrey)
+![Google Fonts](https://img.shields.io/badge/Google%20Fonts-Custom%20Fonts-red)
+![Cupertino Icons](https://img.shields.io/badge/Cupertino%20Icons-iOS%20UI-blue)
+
+## Web - Next.js / React
+![Next.js](https://img.shields.io/badge/Next.js-15.3.2-black?logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-19-blue?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-teal?logo=tailwindcss&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-1.9.0-blue)
+![js-cookie](https://img.shields.io/badge/js-cookie-3.0.5-yellow)
+![Next Themes](https://img.shields.io/badge/Next%20Themes-0.4.6-lightgrey)
+![Sonner](https://img.shields.io/badge/Sonner-2.0.3-purple)
+![ESLint](https://img.shields.io/badge/ESLint-9-orange)
+![npm](https://img.shields.io/badge/npm-Node.js%20Package-red)
+
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
+
 # 🏋️ WorkGym! 💪
 
 ## 📜 Descrição
@@ -176,5 +219,4 @@ web-workgym/
 
 Desenvolvido como um projeto de estudo. Augusto Iseppe 🚀
 
-![Image](https://github.com/user-attachments/assets/17527036-16d1-4872-9ce0-9e13948e80aa)
-![Image](https://github.com/user-attachments/assets/23366123-5d94-401f-b2e4-9dd418f304be)
+
